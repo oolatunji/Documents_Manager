@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Add Function";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/addfunctions")
+<div id="page-title">
+    <h2>FUNCTION MANAGEMENT</h2>
+    <p>Add Function</p>
+</div>
+<div class="panel">
+    <div class="panel-body">
+        <h3 class="title-hero">
+            <i class="glyph-icon icon-plus-square"></i> Add Function
+        </h3>
+        <div class="example-box-wrapper">
+            <form class="form-horizontal bordered-row" id="demo-form" data-parsley-validate="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Enter Function Name" required class="form-control" id="functionName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Page URL</label>
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="Enter Function Page URL" required class="form-control" id="functionPageLink">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" id="addBtn" class="btn btn-lg btn-info" style="float:right;" onclick="addFunction()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

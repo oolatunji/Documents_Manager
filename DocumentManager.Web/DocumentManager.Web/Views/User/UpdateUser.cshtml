@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Update User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/updateusers")
+<div id="page-title">
+    <h2>USER MANAGEMENT</h2>
+    <p>Update User</p>
+</div>
+<div class="panel">
+    <div class="panel-body">
+        <h3 class="title-hero">
+            <i class="glyph-icon icon-edit"></i> Update User
+        </h3>
+        <div class="example-box-wrapper">
+            <form class="form-horizontal bordered-row" id="demo-form" data-parsley-validate="">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Lastname</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Enter Lastname" name="lastname" id="lastname" autofocus="" required="" data-parsley-required-message="Please enter lastname" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Othernames</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Enter Othernames" name="othernames" id="othernames" required="" data-parsley-required-message="Please enter other names" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Gender</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="gender" required="" data-parsley-required-message="Please select gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Phone Number</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Enter Phone Number" name="phoneNumber" id="phoneNumber" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email Address</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" placeholder="Enter Email Address" name="emailAddress" id="emailAddress" required="" data-parsley-required-message="Please enter email address" data-parsley-type="email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="Enter Username" name="username" id="username" required="" readonly="readonly" data-parsley-required-message="Please enter username" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Role</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="userRole" required="" data-parsley-required-message="Please select role"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" id="updateBtn" class="btn btn-lg btn-info" style="float:right;" onclick="updateUser()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer" style="text-align:right">
+            <a href="../User/ViewUser" title="View User" style="color:blue;font-weight:bold;"><i class="glyph-icon icon-mail-reply-all"></i> View Users</a>
+        </div>
+    </div>
+</div>
+
+
