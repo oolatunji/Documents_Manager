@@ -23,7 +23,7 @@ String.prototype.trimRight = function (charlist) {
     return this.replace(new RegExp("[" + charlist + "]+$"), "");
 };
 
-function addCriteria() {
+function addLocation() {
     try {
 
         var formValid = $('#demo-form').parsley().validate();
