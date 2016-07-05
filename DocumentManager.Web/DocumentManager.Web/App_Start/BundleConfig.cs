@@ -109,6 +109,30 @@ namespace DocumentManager.Web
                       "~/Scripts/User/ViewUser.js"
                       ));
 
+            bundles.Add(new ScriptBundle("~/addcriterias").Include(
+                     "~/Scripts/CatalogueCriteria/AddCriteria.js"
+                     ));
+
+            bundles.Add(new ScriptBundle("~/updatecriterias").Include(
+                    "~/Scripts/CatalogueCriteria/UpdateCriteria.js"
+                    ));
+
+            bundles.Add(new ScriptBundle("~/viewcriterias").Include(
+                      "~/Scripts/CatalogueCriteria/ViewCriteria.js"
+                      ));
+
+            bundles.Add(new ScriptBundle("~/addlocations").Include(
+                     "~/Scripts/PhysicalLocation/AddLocation.js"
+                     ));
+
+            bundles.Add(new ScriptBundle("~/updatelocations").Include(
+                    "~/Scripts/PhysicalLocation/UpdateLocation.js"
+                    ));
+
+            bundles.Add(new ScriptBundle("~/viewlocations").Include(
+                      "~/Scripts/PhysicalLocation/ViewLocation.js"
+                      ));
+
             bundles.Add(new StyleBundle("~/common/css").Include(
                       "~/assets/helpers/animate.css",
                       "~/assets/helpers/boilerplate.css",

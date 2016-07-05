@@ -160,11 +160,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\api\CatalogueCriteriaAPIController.cs" />
     <Compile Include="Controllers\api\FunctionAPIController.cs" />
+    <Compile Include="Controllers\api\PhysicalLocationAPIController.cs" />
     <Compile Include="Controllers\api\RoleAPIController.cs" />
     <Compile Include="Controllers\api\UserAPIController.cs" />
+    <Compile Include="Controllers\CatalogueCriteriaController.cs" />
     <Compile Include="Controllers\FunctionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PhysicalLocationController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -962,6 +966,9 @@
     <Content Include="Scripts\Branch\AddBranch.js" />
     <Content Include="Scripts\Branch\UpdateBranch.js" />
     <Content Include="Scripts\Branch\ViewBranch.js" />
+    <Content Include="Scripts\CatalogueCriteria\AddCriteria.js" />
+    <Content Include="Scripts\CatalogueCriteria\UpdateCriteria.js" />
+    <Content Include="Scripts\CatalogueCriteria\ViewCriteria.js" />
     <Content Include="Scripts\DynamicMenu\Dashboard.js" />
     <Content Include="Scripts\DynamicMenu\Layout.js" />
     <Content Include="Scripts\Function\AddFunction.js" />
@@ -973,6 +980,9 @@
     <Content Include="Scripts\Password\ForgotPassword.js" />
     <Content Include="Scripts\Password\PasswordReset.js" />
     <Content Include="Scripts\Password\UnlockScreen.js" />
+    <Content Include="Scripts\PhysicalLocation\AddLocation.js" />
+    <Content Include="Scripts\PhysicalLocation\UpdateLocation.js" />
+    <Content Include="Scripts\PhysicalLocation\ViewLocation.js" />
     <Content Include="Scripts\Role\AddRole.js" />
     <Content Include="Scripts\Role\UpdateRole.js" />
     <Content Include="Scripts\Role\ViewRole.js" />
@@ -1052,6 +1062,12 @@
     <Content Include="Views\User\UpdateUser.cshtml" />
     <Content Include="Views\User\AddUser.cshtml" />
     <Content Include="Views\User\LockScreen.cshtml" />
+    <Content Include="Views\CatalogueCriteria\AddCriteria.cshtml" />
+    <Content Include="Views\CatalogueCriteria\ViewCriteria.cshtml" />
+    <Content Include="Views\CatalogueCriteria\UpdateCriteria.cshtml" />
+    <Content Include="Views\PhysicalLocation\AddLocation.cshtml" />
+    <Content Include="Views\PhysicalLocation\ViewLocation.cshtml" />
+    <Content Include="Views\PhysicalLocation\UpdateLocation.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

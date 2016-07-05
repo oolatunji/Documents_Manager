@@ -50,9 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataLibrary\CatalogueCriteriaDL.cs" />
     <Compile Include="DataLibrary\FunctionDL.cs" />
+    <Compile Include="DataLibrary\PhysicalLocationDL.cs" />
     <Compile Include="DataLibrary\RoleDL.cs" />
     <Compile Include="DataLibrary\UserDL.cs" />
+    <Compile Include="ModelLibrary\EntityFrameworkLib\CatalogueCriteria.cs">
+      <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelLibrary\EntityFrameworkLib\DocumentLibraryModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,6 +77,9 @@
       <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelLibrary\EntityFrameworkLib\FunctionModel.cs" />
+    <Compile Include="ModelLibrary\EntityFrameworkLib\PhysicalLocation.cs">
+      <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelLibrary\EntityFrameworkLib\Role.cs">
       <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
     </Compile>
@@ -90,7 +98,9 @@
     <Compile Include="ModelLibrary\Utility\PasswordHash.cs" />
     <Compile Include="ModelLibrary\Utility\RijndaelEnhanced.cs" />
     <Compile Include="ModelLibrary\Utility\StatusUtil.cs" />
+    <Compile Include="ProcessLibrary\CatalogueCriteriaPL.cs" />
     <Compile Include="ProcessLibrary\FunctionPL.cs" />
+    <Compile Include="ProcessLibrary\PhysicalLocationPL.cs" />
     <Compile Include="ProcessLibrary\RolePL.cs" />
     <Compile Include="ProcessLibrary\UserPL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

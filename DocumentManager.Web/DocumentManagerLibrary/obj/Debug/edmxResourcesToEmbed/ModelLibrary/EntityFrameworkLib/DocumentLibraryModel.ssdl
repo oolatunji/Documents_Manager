@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DocumentManagerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="CatalogueCriteria">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="Description" Type="text" />
+    <Property Name="Date" Type="datetime" />
+  </EntityType>
   <EntityType Name="Functions">
     <Key>
       <PropertyRef Name="ID" />
@@ -8,6 +17,16 @@
     <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="PageLink" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PhysicalLocation">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="Location" Type="nvarchar" MaxLength="250" />
+    <Property Name="Description" Type="text" />
+    <Property Name="Date" Type="datetime" />
   </EntityType>
   <EntityType Name="RoleFunctions">
     <Key>
@@ -78,7 +97,9 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="DocumentManagerDBModelStoreContainer">
+    <EntitySet Name="CatalogueCriteria" EntityType="Self.CatalogueCriteria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Functions" EntityType="Self.Functions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PhysicalLocation" EntityType="Self.PhysicalLocation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoleFunctions" EntityType="Self.RoleFunctions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />

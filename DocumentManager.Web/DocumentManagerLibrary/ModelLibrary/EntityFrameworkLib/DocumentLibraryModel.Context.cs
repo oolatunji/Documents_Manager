@@ -29,5 +29,7 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
         public virtual DbSet<RoleFunction> RoleFunctions { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<CatalogueCriteria> CatalogueCriterias { get; set; }
+        public virtual DbSet<PhysicalLocation> PhysicalLocations { get; set; }
     }
 }

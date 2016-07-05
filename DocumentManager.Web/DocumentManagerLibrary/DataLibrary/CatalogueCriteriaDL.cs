@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace DocumentManagerLibrary
 {
-    public class FunctionDL
+    public class CatalogueCriteriaDL
     {
-        public FunctionDL()
+        public CatalogueCriteriaDL()
         {
 
         }
 
-        public static bool Save(Function function)
+        public static bool Save(CatalogueCriteria criteria)
         {
             try
             {
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    context.Functions.Add(function);
+                    context.CatalogueCriterias.Add(criteria);
                     context.SaveChanges();
                 }
                 return true;
@@ -32,19 +32,19 @@ namespace DocumentManagerLibrary
             }
         }
 
-        public static bool FunctionExists(Function function)
+        public static bool CriteriaExists(CatalogueCriteria criteria)
         {
             try
             {
-                var existingFunction = new Function();
+                var existingCriteria = new CatalogueCriteria();
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    existingFunction = context.Functions
-                                    .Where(t => t.Name.Equals(function.Name))
+                    existingCriteria = context.CatalogueCriterias
+                                    .Where(t => t.Name.Equals(criteria.Name))
                                     .FirstOrDefault();
                 }
 
-                if (existingFunction == null)
+                if (existingCriteria == null)
                     return false;
                 else
                     return true;
@@ -55,15 +55,15 @@ namespace DocumentManagerLibrary
             }
         }
 
-        public static List<Function> RetrieveFunctions()
+        public static List<CatalogueCriteria> RetrieveCriterias()
         {
             try
             {
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    var functions = context.Functions.ToList();
+                    var criterias = context.CatalogueCriterias.ToList();
 
-                    return functions.OrderBy(fun => fun.Name).ToList();
+                    return criterias;
                 }
             }
             catch (Exception ex)
@@ -72,44 +72,26 @@ namespace DocumentManagerLibrary
             }
         }
 
-        public static Function RetrieveFunctionByID(long functionID)
+        public static bool Update(CatalogueCriteria criteria)
         {
             try
             {
+                CatalogueCriteria existingcriteria  = new CatalogueCriteria();
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    var function = context.Functions
-                                            .Where(f => f.ID == functionID);
-
-                    return function.FirstOrDefault();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static bool Update(Function function)
-        {
-            try
-            {
-                Function existingfunction = new Function();
-                using (var context = new DocumentManagerDBEntities())
-                {
-                    existingfunction = context.Functions
-                                    .Where(t => t.ID == function.ID)
+                    existingcriteria = context.CatalogueCriterias
+                                    .Where(t => t.ID == criteria.ID)
                                     .FirstOrDefault();
                 }
 
-                if (existingfunction != null)
+                if (existingcriteria != null)
                 {
-                    existingfunction.Name = function.Name;
-                    existingfunction.PageLink = function.PageLink;
+                    existingcriteria.Name = criteria.Name;
+                    existingcriteria.Description = criteria.Description;
 
                     using (var context = new DocumentManagerDBEntities())
                     {
-                        context.Entry(existingfunction).State = EntityState.Modified;
+                        context.Entry(existingcriteria).State = EntityState.Modified;
 
                         context.SaveChanges();
                     }

@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace DocumentManagerLibrary
 {
-    public class FunctionDL
+    public class PhysicalLocationDL
     {
-        public FunctionDL()
+        public PhysicalLocationDL()
         {
 
         }
 
-        public static bool Save(Function function)
+        public static bool Save(PhysicalLocation location)
         {
             try
             {
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    context.Functions.Add(function);
+                    context.PhysicalLocations.Add(location);
                     context.SaveChanges();
                 }
                 return true;
@@ -32,19 +32,19 @@ namespace DocumentManagerLibrary
             }
         }
 
-        public static bool FunctionExists(Function function)
+        public static bool LocationExists(PhysicalLocation location)
         {
             try
             {
-                var existingFunction = new Function();
+                var existingLocation = new PhysicalLocation();
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    existingFunction = context.Functions
-                                    .Where(t => t.Name.Equals(function.Name))
+                    existingLocation = context.PhysicalLocations
+                                    .Where(t => t.Name.Equals(location.Name) || t.Location.Equals(location.Location))
                                     .FirstOrDefault();
                 }
 
-                if (existingFunction == null)
+                if (existingLocation == null)
                     return false;
                 else
                     return true;
@@ -55,15 +55,15 @@ namespace DocumentManagerLibrary
             }
         }
 
-        public static List<Function> RetrieveFunctions()
+        public static List<PhysicalLocation> RetrieveLocations()
         {
             try
             {
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    var functions = context.Functions.ToList();
+                    var locations = context.PhysicalLocations.ToList();
 
-                    return functions.OrderBy(fun => fun.Name).ToList();
+                    return locations;
                 }
             }
             catch (Exception ex)
@@ -72,44 +72,27 @@ namespace DocumentManagerLibrary
             }
         }
 
-        public static Function RetrieveFunctionByID(long functionID)
+        public static bool Update(PhysicalLocation location)
         {
             try
             {
+                var existinglocation  = new PhysicalLocation();
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    var function = context.Functions
-                                            .Where(f => f.ID == functionID);
-
-                    return function.FirstOrDefault();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public static bool Update(Function function)
-        {
-            try
-            {
-                Function existingfunction = new Function();
-                using (var context = new DocumentManagerDBEntities())
-                {
-                    existingfunction = context.Functions
-                                    .Where(t => t.ID == function.ID)
+                    existinglocation = context.PhysicalLocations
+                                    .Where(t => t.ID == location.ID)
                                     .FirstOrDefault();
                 }
 
-                if (existingfunction != null)
+                if (existinglocation != null)
                 {
-                    existingfunction.Name = function.Name;
-                    existingfunction.PageLink = function.PageLink;
+                    existinglocation.Name = location.Name;
+                    existinglocation.Description = location.Description;
+                    existinglocation.Location = location.Location;
 
                     using (var context = new DocumentManagerDBEntities())
                     {
-                        context.Entry(existingfunction).State = EntityState.Modified;
+                        context.Entry(existinglocation).State = EntityState.Modified;
 
                         context.SaveChanges();
                     }
