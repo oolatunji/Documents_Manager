@@ -32,6 +32,23 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static bool RequestDocument(DocumentTransaction transaction)
+        {
+            try
+            {
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    context.DocumentTransactions.Add(transaction);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static bool DocumentExists(string name)
         {
             try
@@ -64,6 +81,29 @@ namespace DocumentManagerLibrary
                     var docs = context.DocumentDetails
                                         .Include(doc => doc.CatalogueCriteria)
                                         .Include(doc => doc.PhysicalLocation)
+                                        .Include(doc => doc.User)
+                                        .Include(doc => doc.User1)
+                                        .ToList();
+
+                    return docs;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<DocumentTransaction> RetrieveDocumentTransactions()
+        {
+            try
+            {
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    var docs = context.DocumentTransactions
+                                        .Include(doc => doc.DocumentDetail)
+                                        .Include("DocumentDetail.CatalogueCriteria")
+                                        .Include("DocumentDetail.PhysicalLocation")
                                         .Include(doc => doc.User)
                                         .Include(doc => doc.User1)
                                         .ToList();
@@ -129,6 +169,50 @@ namespace DocumentManagerLibrary
                     return false;
                 }
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool ApproveDocument(DocumentTransaction doc)
+        {
+            try
+            {
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var existingDoc = new DocumentDetail();
+                            existingDoc = context.DocumentDetails
+                                            .Where(t => t.ID == doc.DocumentDetailID)
+                                            .FirstOrDefault();
+
+                            existingDoc.CurrentUser = doc.ToUser;
+                            context.Entry(existingDoc).State = EntityState.Modified;
+                            context.SaveChanges();
+
+                            var existingDocTransaction = new DocumentTransaction();
+                            existingDocTransaction = context.DocumentTransactions
+                                                        .Where(t => t.ID == doc.ID)
+                                                        .FirstOrDefault();
+
+                            existingDocTransaction.Status = StatusUtil.RequestStatus.Approved.ToString();
+                            context.Entry(existingDocTransaction).State = EntityState.Modified;
+                            context.SaveChanges();
+
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            transaction.Rollback();
+                            throw e;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {

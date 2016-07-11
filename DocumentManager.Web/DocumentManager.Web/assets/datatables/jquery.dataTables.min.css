@@ -39,6 +39,22 @@ tr.shown td.document-control {
     background: url('../images/show_document.png') no-repeat center center;
 }
 
+td.approve-control {
+    background: url('../images/approve.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.approve-control {
+    background: url('../images/approve.png') no-repeat center center;
+}
+
+td.request-control {
+    background: url('../images/request.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.request-control {
+    background: url('../images/request.png') no-repeat center center;
+}
+
 tfoot input {
         width: 100%;
         padding: 3px;

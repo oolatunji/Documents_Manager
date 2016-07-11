@@ -13,5 +13,11 @@ namespace DocumentManagerLibrary
             Active,
             InActive
         }
+
+        public enum RequestStatus
+        {
+            Pending,
+            Approved
+        }
     }
 }

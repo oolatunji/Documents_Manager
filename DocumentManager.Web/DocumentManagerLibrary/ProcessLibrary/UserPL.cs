@@ -82,6 +82,18 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static User RetrieveUserByID(long ID)
+        {
+            try
+            {
+                return UserDL.RetrieveUserByID(ID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static bool Update(User user)
         {
             try

@@ -48,6 +48,8 @@
     <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
     <NavigationProperty Name="DocumentDetails" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users" FromRole="User" ToRole="DocumentDetail" />
     <NavigationProperty Name="DocumentDetails1" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users1" FromRole="User" ToRole="DocumentDetail" />
+    <NavigationProperty Name="DocumentTransactions" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users" FromRole="User" ToRole="DocumentTransaction" />
+    <NavigationProperty Name="DocumentTransactions1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users1" FromRole="User" ToRole="DocumentTransaction" />
   </EntityType>
   <Association Name="FK_RoleFunctions_RoleFunctions">
     <End Role="Functions" Type="Self.Function" Multiplicity="1" />
@@ -126,6 +128,20 @@
       <End Role="User" EntitySet="Users" />
       <End Role="DocumentDetail" EntitySet="DocumentDetails" />
     </AssociationSet>
+    <EntitySet Name="DocumentTransactions" EntityType="DocumentManagerDBModel.DocumentTransaction" />
+    <EntitySet Name="SearchLists" EntityType="DocumentManagerDBModel.SearchList" />
+    <AssociationSet Name="FK_DocumentTransaction_DocumentDetail" Association="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail">
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+      <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentTransaction_Users" Association="DocumentManagerDBModel.FK_DocumentTransaction_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentTransaction_Users1" Association="DocumentManagerDBModel.FK_DocumentTransaction_Users1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="CatalogueCriteria">
     <Key>
@@ -174,6 +190,7 @@
     <NavigationProperty Name="PhysicalLocation" Relationship="DocumentManagerDBModel.FK_DocumentDetail_PhysicalLocation" FromRole="DocumentDetail" ToRole="PhysicalLocation" />
     <NavigationProperty Name="User" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users" FromRole="DocumentDetail" ToRole="User" />
     <NavigationProperty Name="User1" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users1" FromRole="DocumentDetail" ToRole="User" />
+    <NavigationProperty Name="DocumentTransactions" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail" FromRole="DocumentDetail" ToRole="DocumentTransaction" />
   </EntityType>
   <Association Name="FK_DocumentDetail_CatalogueCriteria">
     <End Type="DocumentManagerDBModel.CatalogueCriteria" Role="CatalogueCriteria" Multiplicity="0..1" />
@@ -232,6 +249,64 @@
       </Principal>
       <Dependent Role="DocumentDetail">
         <PropertyRef Name="CurrentUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="DocumentTransaction">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FromUser" Type="Int64" />
+    <Property Name="ToUser" Type="Int64" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="DocumentID" Type="Int64" />
+    <Property Name="DocumentDetailID" Type="Int64" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DocumentDetail" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail" FromRole="DocumentTransaction" ToRole="DocumentDetail" />
+    <NavigationProperty Name="User" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users" FromRole="DocumentTransaction" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users1" FromRole="DocumentTransaction" ToRole="User" />
+  </EntityType>
+  <EntityType Name="SearchList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_DocumentTransaction_DocumentDetail">
+    <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DocumentDetail">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentTransaction">
+        <PropertyRef Name="DocumentDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentTransaction_Users">
+    <End Type="DocumentManagerDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentTransaction">
+        <PropertyRef Name="FromUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentTransaction_Users1">
+    <End Type="DocumentManagerDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentTransaction">
+        <PropertyRef Name="ToUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

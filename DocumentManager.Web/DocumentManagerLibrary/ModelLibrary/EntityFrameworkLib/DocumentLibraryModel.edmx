@@ -35,6 +35,18 @@
           <Property Name="DocumentContent" Type="text" />
           <Property Name="DocumentID" Type="bigint" />
         </EntityType>
+        <EntityType Name="DocumentTransaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FromUser" Type="bigint" />
+          <Property Name="ToUser" Type="bigint" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="DocumentID" Type="bigint" />
+          <Property Name="DocumentDetailID" Type="bigint" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Functions">
           <Key>
             <PropertyRef Name="ID" />
@@ -69,6 +81,13 @@
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Status" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SearchList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="text" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -146,6 +165,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DocumentTransaction_DocumentDetail">
+          <End Role="DocumentDetail" Type="Self.DocumentDetail" Multiplicity="0..1" />
+          <End Role="DocumentTransaction" Type="Self.DocumentTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentTransaction">
+              <PropertyRef Name="DocumentDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentTransaction_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="DocumentTransaction" Type="Self.DocumentTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentTransaction">
+              <PropertyRef Name="FromUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentTransaction_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="DocumentTransaction" Type="Self.DocumentTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentTransaction">
+              <PropertyRef Name="ToUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RoleFunctions_RoleFunctions">
           <End Role="Functions" Type="Self.Functions" Multiplicity="1" />
           <End Role="RoleFunctions" Type="Self.RoleFunctions" Multiplicity="*" />
@@ -186,10 +241,12 @@
           <EntitySet Name="CatalogueCriteria" EntityType="Self.CatalogueCriteria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Document" EntityType="Self.Document" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentDetail" EntityType="Self.DocumentDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DocumentTransaction" EntityType="Self.DocumentTransaction" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Functions" EntityType="Self.Functions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicalLocation" EntityType="Self.PhysicalLocation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleFunctions" EntityType="Self.RoleFunctions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SearchList" EntityType="Self.SearchList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DocumentDetail_CatalogueCriteria" Association="Self.FK_DocumentDetail_CatalogueCriteria">
             <End Role="CatalogueCriteria" EntitySet="CatalogueCriteria" />
@@ -210,6 +267,18 @@
           <AssociationSet Name="FK_DocumentDetail_Users1" Association="Self.FK_DocumentDetail_Users1">
             <End Role="Users" EntitySet="Users" />
             <End Role="DocumentDetail" EntitySet="DocumentDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentTransaction_DocumentDetail" Association="Self.FK_DocumentTransaction_DocumentDetail">
+            <End Role="DocumentDetail" EntitySet="DocumentDetail" />
+            <End Role="DocumentTransaction" EntitySet="DocumentTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentTransaction_Users" Association="Self.FK_DocumentTransaction_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DocumentTransaction" EntitySet="DocumentTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentTransaction_Users1" Association="Self.FK_DocumentTransaction_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DocumentTransaction" EntitySet="DocumentTransaction" />
           </AssociationSet>
           <AssociationSet Name="FK_RoleFunctions_RoleFunctions" Association="Self.FK_RoleFunctions_RoleFunctions">
             <End Role="Functions" EntitySet="Functions" />
@@ -276,6 +345,8 @@
           <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
           <NavigationProperty Name="DocumentDetails" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users" FromRole="User" ToRole="DocumentDetail" />
           <NavigationProperty Name="DocumentDetails1" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users1" FromRole="User" ToRole="DocumentDetail" />
+          <NavigationProperty Name="DocumentTransactions" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users" FromRole="User" ToRole="DocumentTransaction" />
+          <NavigationProperty Name="DocumentTransactions1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users1" FromRole="User" ToRole="DocumentTransaction" />
           </EntityType>
         <Association Name="FK_RoleFunctions_RoleFunctions">
           <End Role="Functions" Type="Self.Function" Multiplicity="1" />
@@ -354,6 +425,20 @@
             <End Role="User" EntitySet="Users" />
             <End Role="DocumentDetail" EntitySet="DocumentDetails" />
           </AssociationSet>
+          <EntitySet Name="DocumentTransactions" EntityType="DocumentManagerDBModel.DocumentTransaction" />
+          <EntitySet Name="SearchLists" EntityType="DocumentManagerDBModel.SearchList" />
+          <AssociationSet Name="FK_DocumentTransaction_DocumentDetail" Association="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail">
+            <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+            <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentTransaction_Users" Association="DocumentManagerDBModel.FK_DocumentTransaction_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentTransaction_Users1" Association="DocumentManagerDBModel.FK_DocumentTransaction_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="CatalogueCriteria">
           <Key>
@@ -402,6 +487,7 @@
           <NavigationProperty Name="PhysicalLocation" Relationship="DocumentManagerDBModel.FK_DocumentDetail_PhysicalLocation" FromRole="DocumentDetail" ToRole="PhysicalLocation" />
           <NavigationProperty Name="User" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users" FromRole="DocumentDetail" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users1" FromRole="DocumentDetail" ToRole="User" />
+          <NavigationProperty Name="DocumentTransactions" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail" FromRole="DocumentDetail" ToRole="DocumentTransaction" />
         </EntityType>
         <Association Name="FK_DocumentDetail_CatalogueCriteria">
           <End Type="DocumentManagerDBModel.CatalogueCriteria" Role="CatalogueCriteria" Multiplicity="0..1" />
@@ -460,6 +546,64 @@
             </Principal>
             <Dependent Role="DocumentDetail">
               <PropertyRef Name="CurrentUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DocumentTransaction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FromUser" Type="Int64" />
+          <Property Name="ToUser" Type="Int64" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="DocumentID" Type="Int64" />
+          <Property Name="DocumentDetailID" Type="Int64" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DocumentDetail" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail" FromRole="DocumentTransaction" ToRole="DocumentDetail" />
+          <NavigationProperty Name="User" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users" FromRole="DocumentTransaction" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users1" FromRole="DocumentTransaction" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SearchList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_DocumentTransaction_DocumentDetail">
+          <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="0..1" />
+          <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentTransaction">
+              <PropertyRef Name="DocumentDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentTransaction_Users">
+          <End Type="DocumentManagerDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentTransaction">
+              <PropertyRef Name="FromUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentTransaction_Users1">
+          <End Type="DocumentManagerDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DocumentTransaction">
+              <PropertyRef Name="ToUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -554,6 +698,27 @@
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Catalogue" ColumnName="Catalogue" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentTransactions">
+            <EntityTypeMapping TypeName="DocumentManagerDBModel.DocumentTransaction">
+              <MappingFragment StoreEntitySet="DocumentTransaction">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DocumentDetailID" ColumnName="DocumentDetailID" />
+                <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ToUser" ColumnName="ToUser" />
+                <ScalarProperty Name="FromUser" ColumnName="FromUser" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SearchLists">
+            <EntityTypeMapping TypeName="DocumentManagerDBModel.SearchList">
+              <MappingFragment StoreEntitySet="SearchList">
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

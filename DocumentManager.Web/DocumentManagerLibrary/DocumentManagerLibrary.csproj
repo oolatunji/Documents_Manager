@@ -36,8 +36,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp">
-      <HintPath>..\..\..\..\..\Downloads\itextsharp-all-5.5.9\itextsharp-dll-core\itextsharp.dll</HintPath>
+    <Reference Include="itextsharp, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -84,6 +85,10 @@
       <DependentUpon>DocumentLibraryModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="ModelLibrary\EntityFrameworkLib\DocumentModel.cs" />
+    <Compile Include="ModelLibrary\EntityFrameworkLib\DocumentTransaction.cs">
+      <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelLibrary\EntityFrameworkLib\DocumentTransactionModel.cs" />
     <Compile Include="ModelLibrary\EntityFrameworkLib\Function.cs">
       <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
     </Compile>
@@ -95,6 +100,9 @@
       <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelLibrary\EntityFrameworkLib\RoleFunction.cs">
+      <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelLibrary\EntityFrameworkLib\SearchList.cs">
       <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelLibrary\EntityFrameworkLib\User.cs">

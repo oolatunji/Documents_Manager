@@ -90,5 +90,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="DocumentTransactions">
+      <EntityTypeMapping TypeName="DocumentManagerDBModel.DocumentTransaction">
+        <MappingFragment StoreEntitySet="DocumentTransaction">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="DocumentDetailID" ColumnName="DocumentDetailID" />
+          <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="ToUser" ColumnName="ToUser" />
+          <ScalarProperty Name="FromUser" ColumnName="FromUser" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SearchLists">
+      <EntityTypeMapping TypeName="DocumentManagerDBModel.SearchList">
+        <MappingFragment StoreEntitySet="SearchList">
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

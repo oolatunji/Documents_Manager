@@ -12,28 +12,18 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
     using System;
     using System.Collections.Generic;
     
-    public partial class DocumentDetail
+    public partial class DocumentTransaction
     {
-        public DocumentDetail()
-        {
-            this.DocumentTransactions = new HashSet<DocumentTransaction>();
-        }
-    
         public long ID { get; set; }
-        public string Name { get; set; }
-        public Nullable<long> Catalogue { get; set; }
-        public Nullable<long> Location { get; set; }
-        public Nullable<long> Uploader { get; set; }
-        public Nullable<long> CurrentUser { get; set; }
+        public Nullable<long> FromUser { get; set; }
+        public Nullable<long> ToUser { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public string DocumentContent { get; set; }
         public Nullable<long> DocumentID { get; set; }
+        public Nullable<long> DocumentDetailID { get; set; }
+        public string Status { get; set; }
     
-        public virtual CatalogueCriteria CatalogueCriteria { get; set; }
-        public virtual Document Document { get; set; }
-        public virtual PhysicalLocation PhysicalLocation { get; set; }
+        public virtual DocumentDetail DocumentDetail { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
-        public virtual ICollection<DocumentTransaction> DocumentTransactions { get; set; }
     }
 }

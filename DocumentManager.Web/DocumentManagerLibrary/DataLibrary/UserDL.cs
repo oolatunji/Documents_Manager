@@ -150,6 +150,24 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static User RetrieveUserByID(long ID)
+        {
+            try
+            {
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    var users = context.Users
+                                        .Where(f => f.ID == ID);
+
+                    return users.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static bool Update(User user)
         {
             try

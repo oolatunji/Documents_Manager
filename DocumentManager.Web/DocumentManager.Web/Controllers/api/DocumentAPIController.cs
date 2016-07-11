@@ -35,6 +35,87 @@ namespace DocumentManager.Web.Controllers.api
         }
 
         [HttpPost]
+        public HttpResponseMessage RequestDocument([FromBody]DocumentTransactionModel model)
+        {
+            try
+            {
+                string errMsg = string.Empty;
+
+                var docTransaction = new DocumentTransaction
+                {
+                    FromUser = model.FromUser,
+                    ToUser = model.ToUser,
+                    Date = System.DateTime.Now,
+                    DocumentID = model.DocumentID,
+                    DocumentDetailID = model.DocumentDetailID,
+                    Status = StatusUtil.RequestStatus.Pending.ToString()
+                };
+
+                bool result = DocumentPL.RequestDocument(docTransaction);
+                if (result)
+                {
+                    var fromUser = UserPL.RetrieveUserByID(model.FromUser);
+                    var toUser = UserPL.RetrieveUserByID(model.ToUser);
+
+                    Mail.SendRequestDocumentMail(fromUser, toUser, model.DocumentName);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "Request made successfully.");
+                }
+                else
+                {
+                    var response = Request.CreateResponse(HttpStatusCode.BadRequest, "Request failed");
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                var response = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+                return response;
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage ApproveDocument([FromBody]DocumentTransactionModel model)
+        {
+            try
+            {
+                string errMsg = string.Empty;
+
+                var docTransaction = new DocumentTransaction
+                {
+                    FromUser = model.FromUser,
+                    ToUser = model.ToUser,
+                    Date = System.DateTime.Now,
+                    DocumentID = model.DocumentID,
+                    DocumentDetailID = model.DocumentDetailID,
+                    Status = StatusUtil.RequestStatus.Pending.ToString()
+                };
+
+                bool result = DocumentPL.ApproveDocument(docTransaction);
+                if (result)
+                {
+                    var fromUser = UserPL.RetrieveUserByID(model.FromUser);
+
+                    Mail.SendApproveDocumentMail(fromUser, model.DocumentName);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "Request approved successfully.");
+                }
+                else
+                {
+                    var response = Request.CreateResponse(HttpStatusCode.BadRequest, "Request failed");
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                var response = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+                return response;
+            }
+        }
+
+        [HttpPost]
         public HttpResponseMessage ViewDocument([FromBody]DocumentModel model)
         {
             try
@@ -64,6 +145,24 @@ namespace DocumentManager.Web.Controllers.api
             try
             {
                 IEnumerable<Object> documents = DocumentPL.RetrieveDocuments();
+                object returnedDocuments = new { data = documents };
+                return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                var response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                response.ReasonPhrase = ex.Message;
+                return response;
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage RetrieveDocumentTransaction()
+        {
+            try
+            {
+                IEnumerable<Object> documents = DocumentPL.RetrieveDocumentTransactions();
                 object returnedDocuments = new { data = documents };
                 return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
             }

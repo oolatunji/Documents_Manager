@@ -73,6 +73,30 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static bool RequestDocument(DocumentTransaction doc)
+        {
+            try
+            {
+                return DocumentDL.RequestDocument(doc);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool ApproveDocument(DocumentTransaction doc)
+        {
+            try
+            {
+                return DocumentDL.ApproveDocument(doc);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static bool Update(DocumentDetail doc)
         {
             try
@@ -119,8 +143,43 @@ namespace DocumentManagerLibrary
                         PhysicalLocation = doc.PhysicalLocation.Name,
                         Uploader = doc.User.Username,
                         CurrentUser = string.Format("{0} {1}", doc.User1.Lastname, doc.User1.Othernames),
+                        CurrentUserID = doc.User1.ID,
                         Date = String.Format("{0:g}", Convert.ToDateTime(doc.Date)),
                         DocumentID = doc.DocumentID
+                    };
+
+                    returnedDocs.Add(docObj);
+                }
+
+                return returnedDocs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<Object> RetrieveDocumentTransactions()
+        {
+            try
+            {
+                var returnedDocs = new List<object>();
+
+                var docs = DocumentDL.RetrieveDocumentTransactions();
+
+                foreach (DocumentTransaction doc in docs)
+                {
+                    Object docObj = new
+                    {
+                        ID = doc.ID,
+                        Name = doc.DocumentDetail.Name,
+                        CatalogueCriteria = doc.DocumentDetail.CatalogueCriteria.Name,
+                        PhysicalLocation = doc.DocumentDetail.PhysicalLocation.Name,
+                        FromUser = string.Format("{0} {1}", doc.User.Lastname, doc.User.Othernames),
+                        ToUser = string.Format("{0} {1}", doc.User1.Lastname, doc.User1.Othernames),
+                        Date = String.Format("{0:g}", Convert.ToDateTime(doc.Date)),
+                        DocumentID = doc.DocumentID,
+                        Status = doc.Status
                     };
 
                     returnedDocs.Add(docObj);

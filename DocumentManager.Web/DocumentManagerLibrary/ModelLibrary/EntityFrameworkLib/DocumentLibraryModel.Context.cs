@@ -33,5 +33,7 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
         public virtual DbSet<PhysicalLocation> PhysicalLocations { get; set; }
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<DocumentDetail> DocumentDetails { get; set; }
+        public virtual DbSet<DocumentTransaction> DocumentTransactions { get; set; }
+        public virtual DbSet<SearchList> SearchLists { get; set; }
     }
 }

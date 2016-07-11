@@ -185,9 +185,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\MailTemplates\ApproveMail.txt" />
     <Content Include="App_Data\MailTemplates\ForgotPassword.txt" />
     <Content Include="App_Data\MailTemplates\mail.png" />
     <Content Include="App_Data\MailTemplates\NewUser.txt" />
+    <Content Include="App_Data\MailTemplates\RequestMail.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="assets\angular\angular-animate.js" />
     <Content Include="assets\angular\angular-route.js" />
@@ -949,6 +951,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="images\addtocart.png" />
+    <Content Include="images\approve.png" />
     <Content Include="images\back_disabled.png" />
     <Content Include="images\back_enabled.png" />
     <Content Include="images\back_enabled_hover.png" />
@@ -963,6 +966,8 @@
     <Content Include="images\images.jpg" />
     <Content Include="images\images.png" />
     <Content Include="images\mail.png" />
+    <Content Include="images\request.png" />
+    <Content Include="images\request2.png" />
     <Content Include="images\show_document.png" />
     <Content Include="images\sort_asc.png" />
     <Content Include="images\sort_asc_disabled.png" />

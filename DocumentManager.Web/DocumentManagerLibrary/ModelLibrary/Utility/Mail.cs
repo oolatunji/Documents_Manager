@@ -102,7 +102,7 @@ namespace DocumentManagerLibrary
                 string organization = System.Configuration.ConfigurationManager.AppSettings.Get("Organization");
                 string applicationName = System.Configuration.ConfigurationManager.AppSettings.Get("ApplicationName");
                 string websiteUrl = System.Configuration.ConfigurationManager.AppSettings.Get("WebsiteUrl");
-                string passwordResetUrl = websiteUrl + "User/ResetPassword?rq=" + encrypted_username; ;
+                string passwordResetUrl = websiteUrl + "User/ResetPassword?rq=" + encrypted_username;
                 string subject = "Password Reset Request on " + applicationName;
                
                 string fromAddress = "";
@@ -142,6 +142,140 @@ namespace DocumentManagerLibrary
                 Thread email = new Thread(delegate()
                 {
                     Mail.SendMail(user.Email, fromAddress, subject, body, smtpHost, smtpPort, smtpUseDefaultCredentials, smtpUsername, smtpPassword, smtpEnableSsl);
+
+                });
+
+                email.IsBackground = true;
+                email.Start();
+
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                throw ex;
+            }
+
+        }
+
+        public static void SendRequestDocumentMail(User fromUser, User toUser, string documentName)
+        {
+            try
+            {
+                string key = System.Configuration.ConfigurationManager.AppSettings.Get("ekey");
+
+                string userFullName = toUser.Lastname + " " + toUser.Othernames;
+                string fromUserFullName = fromUser.Lastname + " " + fromUser.Othernames;
+
+                string organization = System.Configuration.ConfigurationManager.AppSettings.Get("Organization");
+                string applicationName = System.Configuration.ConfigurationManager.AppSettings.Get("ApplicationName");
+                string websiteUrl = System.Configuration.ConfigurationManager.AppSettings.Get("WebsiteUrl");
+                
+                string subject = "Request for Document: " + documentName;
+
+                string fromAddress = "";
+                string smtpUsername = "";
+                string smtpPassword = "";
+                string smtpHost = "";
+                Int32 smtpPort = 587;
+                bool smtpUseDefaultCredentials = false;
+                bool smtpEnableSsl = true;
+
+                MailHelper mailConfig = ConfigurationManager.GetSection("mailHelperSection") as MailHelper;
+                if (mailConfig != null && mailConfig.Mail != null)
+                {
+                    fromAddress = mailConfig.Mail.FromEmailAddress;
+                    smtpUsername = mailConfig.Mail.Username;
+                    smtpPassword = mailConfig.Mail.Password;
+                }
+
+                if (mailConfig != null && mailConfig.Smtp != null)
+                {
+                    smtpHost = mailConfig.Smtp.Host;
+                    smtpPort = Convert.ToInt32(mailConfig.Smtp.Port);
+                    smtpUseDefaultCredentials = Convert.ToBoolean(mailConfig.Smtp.UseDefaultCredentials);
+                    smtpEnableSsl = Convert.ToBoolean(mailConfig.Smtp.EnableSsl);
+                }
+
+
+                string body = "";
+
+                body = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath(@"~/App_Data/MailTemplates/RequestMail.txt"));
+                body = body.Replace("#Organization", organization);
+                body = body.Replace("#ApplicationName", applicationName);
+                body = body.Replace("#UserFullName", userFullName);
+                body = body.Replace("#WebsiteUrl", websiteUrl);
+                body = body.Replace("#DocumentName", documentName);
+                body = body.Replace("#Requester", fromUserFullName);
+
+                Thread email = new Thread(delegate()
+                {
+                    Mail.SendMail(toUser.Email, fromAddress, subject, body, smtpHost, smtpPort, smtpUseDefaultCredentials, smtpUsername, smtpPassword, smtpEnableSsl);
+
+                });
+
+                email.IsBackground = true;
+                email.Start();
+
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                throw ex;
+            }
+
+        }
+
+        public static void SendApproveDocumentMail(User toUser, string documentName)
+        {
+            try
+            {
+                string key = System.Configuration.ConfigurationManager.AppSettings.Get("ekey");
+
+                string userFullName = toUser.Lastname + " " + toUser.Othernames;
+
+                string organization = System.Configuration.ConfigurationManager.AppSettings.Get("Organization");
+                string applicationName = System.Configuration.ConfigurationManager.AppSettings.Get("ApplicationName");
+                string websiteUrl = System.Configuration.ConfigurationManager.AppSettings.Get("WebsiteUrl");
+
+                string subject = "Request for Document: " + documentName + " Approved";
+
+                string fromAddress = "";
+                string smtpUsername = "";
+                string smtpPassword = "";
+                string smtpHost = "";
+                Int32 smtpPort = 587;
+                bool smtpUseDefaultCredentials = false;
+                bool smtpEnableSsl = true;
+
+                MailHelper mailConfig = ConfigurationManager.GetSection("mailHelperSection") as MailHelper;
+                if (mailConfig != null && mailConfig.Mail != null)
+                {
+                    fromAddress = mailConfig.Mail.FromEmailAddress;
+                    smtpUsername = mailConfig.Mail.Username;
+                    smtpPassword = mailConfig.Mail.Password;
+                }
+
+                if (mailConfig != null && mailConfig.Smtp != null)
+                {
+                    smtpHost = mailConfig.Smtp.Host;
+                    smtpPort = Convert.ToInt32(mailConfig.Smtp.Port);
+                    smtpUseDefaultCredentials = Convert.ToBoolean(mailConfig.Smtp.UseDefaultCredentials);
+                    smtpEnableSsl = Convert.ToBoolean(mailConfig.Smtp.EnableSsl);
+                }
+
+
+                string body = "";
+
+                body = System.IO.File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath(@"~/App_Data/MailTemplates/ApproveMail.txt"));
+                body = body.Replace("#Organization", organization);
+                body = body.Replace("#ApplicationName", applicationName);
+                body = body.Replace("#UserFullName", userFullName);
+                body = body.Replace("#WebsiteUrl", websiteUrl);
+                body = body.Replace("#DocumentName", documentName);
+
+                Thread email = new Thread(delegate()
+                {
+                    Mail.SendMail(toUser.Email, fromAddress, subject, body, smtpHost, smtpPort, smtpUseDefaultCredentials, smtpUsername, smtpPassword, smtpEnableSsl);
 
                 });
 
