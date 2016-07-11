@@ -72,6 +72,42 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static List<Int64?> RetrieveCriteriasByName(List<string> searchValues)
+        {
+            try
+            {
+                var criteriaIDs = new List<Int64?>();
+
+                var criteriaList = new List<CatalogueCriteria>();
+
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    searchValues.ForEach(searchValue =>
+                    {
+                        var criterias = context.CatalogueCriterias
+                                            .Where(cri => cri.Name.Contains(searchValue))
+                                            .ToList();
+
+                        criteriaList.AddRange(criterias);
+
+                    });
+
+                    if(criteriaList.Any())
+                    {
+                        criteriaList.ForEach(criteria =>
+                        {
+                            criteriaIDs.Add(criteria.ID);
+                        });
+                    }
+                    return criteriaIDs;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static bool Update(CatalogueCriteria criteria)
         {
             try

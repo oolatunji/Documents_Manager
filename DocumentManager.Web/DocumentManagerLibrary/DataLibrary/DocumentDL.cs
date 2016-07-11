@@ -163,21 +163,48 @@ namespace DocumentManagerLibrary
             }
         }
 
-        public static List<DocumentDetail> SearchDocuments(string searchValue)
+        public static List<DocumentDetail> SearchDocuments(List<string> searchValues)
         {
             try
             {
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    var docs = context.DocumentDetails
-                                        .Where(doc => doc.DocumentContent.Contains(searchValue))
+                    var locations = PhysicalLocationDL.RetrieveLocationsByName(searchValues);
+                    var criteriaIDs = CatalogueCriteriaDL.RetrieveCriteriasByName(searchValues);
+
+                    var documents = new List<DocumentDetail>();
+                    var docIDs = new List<Int64?>();
+
+                    searchValues.ForEach(searchValue =>
+                    {
+                        var docs = context.DocumentDetails
+                                        .Where(doc => doc.DocumentContent.Contains(searchValue) || doc.Name.Contains(searchValue))
                                         .Include(doc => doc.CatalogueCriteria)
                                         .Include(doc => doc.PhysicalLocation)
                                         .Include(doc => doc.User)
                                         .Include(doc => doc.User1)
                                         .ToList();
 
-                    return docs;
+                        documents.AddRange(docs);
+                    });
+
+                    if(documents.Any())
+                    {
+                        documents.ForEach(doc =>
+                        {
+                            docIDs.Add(doc.ID);
+                        });
+                    }
+
+                    var returendDocuments = context.DocumentDetails
+                                                    .Where(doc => docIDs.Contains(doc.ID) || locations.Contains(doc.Location) || criteriaIDs.Contains(doc.Catalogue))
+                                                    .Include(doc => doc.CatalogueCriteria)
+                                                    .Include(doc => doc.PhysicalLocation)
+                                                    .Include(doc => doc.User)
+                                                    .Include(doc => doc.User1)
+                                                    .ToList();
+
+                    return returendDocuments;
                 }
             }
             catch (Exception ex)

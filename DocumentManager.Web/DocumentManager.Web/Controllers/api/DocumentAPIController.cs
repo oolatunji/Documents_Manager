@@ -201,7 +201,8 @@ namespace DocumentManager.Web.Controllers.api
         {
             try
             {
-                IEnumerable<Object> documents = DocumentPL.SearchDocuments(model.SearchValue);
+                var searchValues = model.SearchValue.Split(' ');
+                IEnumerable<Object> documents = DocumentPL.SearchDocuments(searchValues.ToList(), model.SearchValue);
                 object returnedDocuments = new { data = documents };
                 return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
             }

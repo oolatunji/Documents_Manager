@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Approve Document";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style type="text/css">
+    .hide {
+        display: none;
+    }
+</style>
+@Scripts.Render("~/approvedocument")
+<div id="page-title">
+    <h2>DOCUMENT MANAGEMENT</h2>
+    <p>Approve Document</p>
+</div>
+<div class="panel">
+    <div class="panel-body">
+        <h3 class="title-hero">
+            <i class="glyph-icon icon-th-list"></i> Document List
+            <span id="loadicon" class="hide"><img src="~/assets/images/spinner/loader-dark.gif" width="15px" height="15px" /></span>
+        </h3>
+        <div class="example-box-wrapper">
+            <table id="example" class="cell-border hover order-column cell-border" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th>Document</th>
+                        <th>Requesting User</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tfoot>
+                    <tr>
+                        <th>Document</th>
+                        <th>Requesting User</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+

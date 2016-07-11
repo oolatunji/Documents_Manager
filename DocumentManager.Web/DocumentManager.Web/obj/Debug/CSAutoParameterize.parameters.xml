@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DocumentManagerDBEntities-Web.config Connection String" description="DocumentManagerDBEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/ModelLibrary.EntityFrameworkLib.DocumentLibraryModel.csdl|res://*/ModelLibrary.EntityFrameworkLib.DocumentLibraryModel.ssdl|res://*/ModelLibrary.EntityFrameworkLib.DocumentLibraryModel.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=.\sqlexpress;initial catalog=DocumentManagerDB;user id=sa;password=root;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\OLATUNJI\\Documents\\projects\\Documents_Manager\\DocumentManager\.Web\\DocumentManager\.Web\\obj\\Debug\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DocumentManagerDBEntities']/@connectionString" />
+  </parameter>
+</parameters>

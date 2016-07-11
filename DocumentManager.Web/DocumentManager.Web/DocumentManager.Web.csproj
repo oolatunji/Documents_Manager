@@ -1094,6 +1094,7 @@
     <Content Include="Views\Document\ApproveDocument.cshtml" />
     <Content Include="Views\Document\Transactions.cshtml" />
     <Content Include="Views\Document\Search.cshtml" />
+    <None Include="Properties\PublishProfiles\DocumentManagerDeploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

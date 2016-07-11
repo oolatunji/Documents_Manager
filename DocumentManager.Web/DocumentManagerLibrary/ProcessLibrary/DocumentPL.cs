@@ -171,13 +171,13 @@ namespace DocumentManagerLibrary
             }
         }
 
-        public static List<Object> SearchDocuments(string searchValue)
+        public static List<Object> SearchDocuments(List<string> searchValues, string queryString)
         {
             try
             {
                 var returnedDocs = new List<object>();
 
-                var docs = DocumentDL.SearchDocuments(searchValue);
+                var docs = DocumentDL.SearchDocuments(searchValues);
 
                 foreach (DocumentDetail doc in docs)
                 {
@@ -197,7 +197,7 @@ namespace DocumentManagerLibrary
                     returnedDocs.Add(docObj);
                 }
 
-                DocumentDL.SaveSearchSubject(searchValue);
+                //DocumentDL.SaveSearchSubject(queryString);
 
                 return returnedDocs;
             }
