@@ -33,5 +33,10 @@ namespace DocumentManager.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Search()
+        {
+            return View();
+        }
     }
 }

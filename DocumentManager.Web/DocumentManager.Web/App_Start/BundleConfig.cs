@@ -153,6 +153,10 @@ namespace DocumentManager.Web
                    "~/Scripts/Document/Transactions.js"
                    ));
 
+            bundles.Add(new ScriptBundle("~/search").Include(
+                  "~/Scripts/Document/Search.js"
+                  ));
+
             bundles.Add(new StyleBundle("~/common/css").Include(
                       "~/assets/helpers/animate.css",
                       "~/assets/helpers/boilerplate.css",

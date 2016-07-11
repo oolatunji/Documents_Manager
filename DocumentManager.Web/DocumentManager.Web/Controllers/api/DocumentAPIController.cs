@@ -1,4 +1,5 @@
-﻿using DocumentManagerLibrary;
+﻿using DocumentManager.Web.Models;
+using DocumentManagerLibrary;
 using DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib;
 using System;
 using System.Collections.Generic;
@@ -183,6 +184,24 @@ namespace DocumentManager.Web.Controllers.api
             try
             {
                 IEnumerable<Object> documents = DocumentPL.RetrieveDocuments();
+                object returnedDocuments = new { data = documents };
+                return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                var response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                response.ReasonPhrase = ex.Message;
+                return response;
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage SearchDocument([FromBody]SearchFilterModel model)
+        {
+            try
+            {
+                IEnumerable<Object> documents = DocumentPL.SearchDocuments(model.SearchValue);
                 object returnedDocuments = new { data = documents };
                 return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
             }

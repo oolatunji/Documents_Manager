@@ -32,6 +32,28 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static bool SaveSearchSubject(string searchValue)
+        {
+            try
+            {
+                var searchList = new SearchList
+                {
+                    Subject = searchValue
+                };
+
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    context.SearchLists.Add(searchList);
+                    context.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static bool RequestDocument(DocumentTransaction transaction)
         {
             try
@@ -130,6 +152,29 @@ namespace DocumentManagerLibrary
                                         .Include(doc => doc.User)
                                         .Include(doc => doc.User1)
                                         .Where(doc => doc.Status == status)
+                                        .ToList();
+
+                    return docs;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static List<DocumentDetail> SearchDocuments(string searchValue)
+        {
+            try
+            {
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    var docs = context.DocumentDetails
+                                        .Where(doc => doc.DocumentContent.Contains(searchValue))
+                                        .Include(doc => doc.CatalogueCriteria)
+                                        .Include(doc => doc.PhysicalLocation)
+                                        .Include(doc => doc.User)
+                                        .Include(doc => doc.User1)
                                         .ToList();
 
                     return docs;

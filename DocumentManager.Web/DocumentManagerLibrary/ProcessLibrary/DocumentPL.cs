@@ -171,6 +171,42 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static List<Object> SearchDocuments(string searchValue)
+        {
+            try
+            {
+                var returnedDocs = new List<object>();
+
+                var docs = DocumentDL.SearchDocuments(searchValue);
+
+                foreach (DocumentDetail doc in docs)
+                {
+                    Object docObj = new
+                    {
+                        ID = doc.ID,
+                        Name = doc.Name,
+                        CatalogueCriteria = doc.CatalogueCriteria.Name,
+                        PhysicalLocation = doc.PhysicalLocation.Name,
+                        Uploader = doc.User.Username,
+                        CurrentUser = string.Format("{0} {1}", doc.User1.Lastname, doc.User1.Othernames),
+                        CurrentUserID = doc.User1.ID,
+                        Date = String.Format("{0:g}", Convert.ToDateTime(doc.Date)),
+                        DocumentID = doc.DocumentID
+                    };
+
+                    returnedDocs.Add(docObj);
+                }
+
+                DocumentDL.SaveSearchSubject(searchValue);
+
+                return returnedDocs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static List<Object> RetrieveDocumentTransactions()
         {
             try

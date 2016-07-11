@@ -182,6 +182,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\PasswordModel.cs" />
+    <Compile Include="Models\SearchFilterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -984,6 +985,7 @@
     <Content Include="Scripts\CatalogueCriteria\ViewCriteria.js" />
     <Content Include="Scripts\Document\ApproveDocument.js" />
     <Content Include="Scripts\Document\RequestDocument.js" />
+    <Content Include="Scripts\Document\Search.js" />
     <Content Include="Scripts\Document\Transactions.js" />
     <Content Include="Scripts\Document\Upload.js" />
     <Content Include="Scripts\Document\ViewDocument.js" />
@@ -1091,6 +1093,7 @@
     <Content Include="Views\Document\RequestDocument.cshtml" />
     <Content Include="Views\Document\ApproveDocument.cshtml" />
     <Content Include="Views\Document\Transactions.cshtml" />
+    <Content Include="Views\Document\Search.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
