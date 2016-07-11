@@ -133,6 +133,22 @@ namespace DocumentManager.Web
                       "~/Scripts/PhysicalLocation/ViewLocation.js"
                       ));
 
+            bundles.Add(new ScriptBundle("~/uploaddocument").Include(
+                   "~/Scripts/Document/Upload.js"
+                   ));
+
+            bundles.Add(new ScriptBundle("~/viewdocument").Include(
+                   "~/Scripts/Document/ViewDocument.js"
+                   ));
+
+            bundles.Add(new ScriptBundle("~/requestdocument").Include(
+                   "~/Scripts/Document/RequestDocument.js"
+                   ));
+
+            bundles.Add(new ScriptBundle("~/approvedocument").Include(
+                   "~/Scripts/Document/ApproveDocument.js"
+                   ));
+
             bundles.Add(new StyleBundle("~/common/css").Include(
                       "~/assets/helpers/animate.css",
                       "~/assets/helpers/boilerplate.css",

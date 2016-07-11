@@ -14,6 +14,13 @@
         <AssociationConnector Association="DocumentManagerDBModel.FK_Users_Roles" ManuallyRouted="false" />
         <EntityTypeShape EntityType="DocumentManagerDBModel.CatalogueCriteria" Width="1.5" PointX="5.375" PointY="0.75" />
         <EntityTypeShape EntityType="DocumentManagerDBModel.PhysicalLocation" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="DocumentManagerDBModel.Document" Width="1.5" PointX="5.375" PointY="7.25" />
+        <EntityTypeShape EntityType="DocumentManagerDBModel.DocumentDetail" Width="1.5" PointX="7.625" PointY="3.25" />
+        <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentDetail_CatalogueCriteria" />
+        <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentDetail_Document" />
+        <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentDetail_PhysicalLocation" />
+        <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentDetail_Users" />
+        <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentDetail_Users1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

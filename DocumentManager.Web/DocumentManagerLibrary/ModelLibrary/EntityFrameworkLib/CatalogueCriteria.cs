@@ -14,9 +14,16 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
     
     public partial class CatalogueCriteria
     {
+        public CatalogueCriteria()
+        {
+            this.DocumentDetails = new HashSet<DocumentDetail>();
+        }
+    
         public long ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+    
+        public virtual ICollection<DocumentDetail> DocumentDetails { get; set; }
     }
 }

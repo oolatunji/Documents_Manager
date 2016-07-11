@@ -31,5 +31,7 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<CatalogueCriteria> CatalogueCriterias { get; set; }
         public virtual DbSet<PhysicalLocation> PhysicalLocations { get; set; }
+        public virtual DbSet<Document> Documents { get; set; }
+        public virtual DbSet<DocumentDetail> DocumentDetails { get; set; }
     }
 }

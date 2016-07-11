@@ -12,19 +12,22 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
     using System;
     using System.Collections.Generic;
     
-    public partial class PhysicalLocation
+    public partial class DocumentDetail
     {
-        public PhysicalLocation()
-        {
-            this.DocumentDetails = new HashSet<DocumentDetail>();
-        }
-    
         public long ID { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
-        public string Description { get; set; }
+        public Nullable<long> Catalogue { get; set; }
+        public Nullable<long> Location { get; set; }
+        public Nullable<long> Uploader { get; set; }
+        public Nullable<long> CurrentUser { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public string DocumentContent { get; set; }
+        public Nullable<long> DocumentID { get; set; }
     
-        public virtual ICollection<DocumentDetail> DocumentDetails { get; set; }
+        public virtual CatalogueCriteria CatalogueCriteria { get; set; }
+        public virtual Document Document { get; set; }
+        public virtual PhysicalLocation PhysicalLocation { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
     }
 }

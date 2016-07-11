@@ -45,6 +45,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp, Version=5.5.9.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DocumentManagerLibrary\bin\Debug\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -161,11 +165,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\api\CatalogueCriteriaAPIController.cs" />
+    <Compile Include="Controllers\api\DocumentAPIController.cs" />
     <Compile Include="Controllers\api\FunctionAPIController.cs" />
     <Compile Include="Controllers\api\PhysicalLocationAPIController.cs" />
     <Compile Include="Controllers\api\RoleAPIController.cs" />
     <Compile Include="Controllers\api\UserAPIController.cs" />
     <Compile Include="Controllers\CatalogueCriteriaController.cs" />
+    <Compile Include="Controllers\DocumentController.cs" />
     <Compile Include="Controllers\FunctionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PhysicalLocationController.cs" />
@@ -957,6 +963,7 @@
     <Content Include="images\images.jpg" />
     <Content Include="images\images.png" />
     <Content Include="images\mail.png" />
+    <Content Include="images\show_document.png" />
     <Content Include="images\sort_asc.png" />
     <Content Include="images\sort_asc_disabled.png" />
     <Content Include="images\sort_both.png" />
@@ -969,6 +976,10 @@
     <Content Include="Scripts\CatalogueCriteria\AddCriteria.js" />
     <Content Include="Scripts\CatalogueCriteria\UpdateCriteria.js" />
     <Content Include="Scripts\CatalogueCriteria\ViewCriteria.js" />
+    <Content Include="Scripts\Document\ApproveDocument.js" />
+    <Content Include="Scripts\Document\RequestDocument.js" />
+    <Content Include="Scripts\Document\Upload.js" />
+    <Content Include="Scripts\Document\ViewDocument.js" />
     <Content Include="Scripts\DynamicMenu\Dashboard.js" />
     <Content Include="Scripts\DynamicMenu\Layout.js" />
     <Content Include="Scripts\Function\AddFunction.js" />
@@ -1068,6 +1079,10 @@
     <Content Include="Views\PhysicalLocation\AddLocation.cshtml" />
     <Content Include="Views\PhysicalLocation\ViewLocation.cshtml" />
     <Content Include="Views\PhysicalLocation\UpdateLocation.cshtml" />
+    <Content Include="Views\Document\UploadDocument.cshtml" />
+    <Content Include="Views\Document\ViewDocument.cshtml" />
+    <Content Include="Views\Document\RequestDocument.cshtml" />
+    <Content Include="Views\Document\ApproveDocument.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

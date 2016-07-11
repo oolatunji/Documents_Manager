@@ -1,17 +1,17 @@
 ﻿$(document).ready(function () {
 
-    //var currentUrl = window.location.href;
-    //var user = JSON.parse(window.sessionStorage.getItem("loggedInUser"));
-    //var userFunctions = user.Function;
+    var currentUrl = window.location.href;
+    var user = JSON.parse(window.sessionStorage.getItem("loggedInUser"));
+    var userFunctions = user.Function;
 
     var authorized = false;
-    //$.each(userFunctions, function (key, userfunction) {
-    //    var link = settingsManager.websiteURL.trimRight('/') + userfunction.PageLink;
-    //    if (currentUrl == link) {
-    //        authorized = true;
-    //    }
-    //});
-    authorized = true;
+    $.each(userFunctions, function (key, userfunction) {
+        var link = settingsManager.websiteURL.trimRight('/') + userfunction.PageLink;
+        if (currentUrl == link) {
+            authorized = true;
+        }
+    });
+    
     if (!authorized) {
         window.location.href = '../System/UnAuthorized';
     } else {

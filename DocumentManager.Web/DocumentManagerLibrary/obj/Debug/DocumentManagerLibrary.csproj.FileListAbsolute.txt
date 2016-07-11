@@ -18,3 +18,4 @@ C:\Users\OLATUNJI\Documents\projects\Documents_Manager\DocumentManager.Web\Docum
 C:\Users\OLATUNJI\Documents\projects\Documents_Manager\DocumentManager.Web\DocumentManagerLibrary\obj\Debug\DocumentManagerLibrary.csprojResolveAssemblyReference.cache
 C:\Users\OLATUNJI\Documents\projects\Documents_Manager\DocumentManager.Web\DocumentManagerLibrary\obj\Debug\DocumentManagerLibrary.dll
 C:\Users\OLATUNJI\Documents\projects\Documents_Manager\DocumentManager.Web\DocumentManagerLibrary\obj\Debug\DocumentManagerLibrary.pdb
+C:\Users\OLATUNJI\Documents\projects\Documents_Manager\DocumentManager.Web\DocumentManagerLibrary\bin\Debug\itextsharp.xml

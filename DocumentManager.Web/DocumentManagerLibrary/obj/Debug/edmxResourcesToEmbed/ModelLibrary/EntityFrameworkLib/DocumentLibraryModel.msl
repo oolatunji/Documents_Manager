@@ -67,5 +67,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Documents">
+      <EntityTypeMapping TypeName="DocumentManagerDBModel.Document">
+        <MappingFragment StoreEntitySet="Document">
+          <ScalarProperty Name="RawDocument" ColumnName="RawDocument" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DocumentDetails">
+      <EntityTypeMapping TypeName="DocumentManagerDBModel.DocumentDetail">
+        <MappingFragment StoreEntitySet="DocumentDetail">
+          <ScalarProperty Name="DocumentID" ColumnName="DocumentID" />
+          <ScalarProperty Name="DocumentContent" ColumnName="DocumentContent" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="CurrentUser" ColumnName="CurrentUser" />
+          <ScalarProperty Name="Uploader" ColumnName="Uploader" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="Catalogue" ColumnName="Catalogue" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -12,28 +12,16 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Document
     {
-        public User()
+        public Document()
         {
             this.DocumentDetails = new HashSet<DocumentDetail>();
-            this.DocumentDetails1 = new HashSet<DocumentDetail>();
         }
     
         public long ID { get; set; }
-        public string Lastname { get; set; }
-        public string Othernames { get; set; }
-        public string Gender { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string Username { get; set; }
-        public Nullable<long> UserRole { get; set; }
-        public string HashedPassword { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-        public Nullable<bool> FirstTime { get; set; }
+        public byte[] RawDocument { get; set; }
     
-        public virtual Role Role { get; set; }
         public virtual ICollection<DocumentDetail> DocumentDetails { get; set; }
-        public virtual ICollection<DocumentDetail> DocumentDetails1 { get; set; }
     }
 }

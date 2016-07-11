@@ -31,6 +31,14 @@ tr.shown td.delete-control {
     background: url('../images/delete.png') no-repeat center center;
 }
 
+td.document-control {
+    background: url('../images/show_document.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.document-control {
+    background: url('../images/show_document.png') no-repeat center center;
+}
+
 tfoot input {
         width: 100%;
         padding: 3px;

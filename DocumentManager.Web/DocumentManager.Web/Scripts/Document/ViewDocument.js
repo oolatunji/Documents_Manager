@@ -14,12 +14,9 @@
         
         if (!authorized)
             window.location.href = '../System/UnAuthorized';
-        else {
-            if (window.sessionStorage.getItem('criteria') !== null) {
-                window.sessionStorage.removeItem('criteria');
-            }
+        else
             getCriteria();
-        }
+        
     } catch (err) {
         displayMessage("error", "Error encountered: " + err);
     }
@@ -45,22 +42,25 @@ function getCriteria() {
 
         "processing": true,
 
-        "ajax": settingsManager.websiteURL + 'api/CatalogueCriteriaAPI/RetrieveCriterias',
+        "ajax": settingsManager.websiteURL + 'api/DocumentAPI/RetrieveDocument',
 
         "columns": [
             { "data": "Name" },
-            { "data": "Description" },
+            { "data": "CatalogueCriteria" },
+            { "data": "PhysicalLocation" },
+            { "data": "Uploader" },
+            { "data": "CurrentUser" },
             { "data": "Date" },
             {
-                "className": 'edit-control',
+                "className": 'document-control',
                 "orderable": false,
                 "data": null,
                 "defaultContent": ''
             },
             {
-                "data": "ID",
+                "data": "DocumentID",
                 "visible": false
-            },
+            }
         ],
 
         "order": [[0, "asc"]],
@@ -89,14 +89,35 @@ function getCriteria() {
         ]
     });
 
-    $('#example tbody').on('click', 'td.edit-control', function () {
+    $('#example tbody').on('click', 'td.document-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
         var data = row.data();
-        var update = confirm("Are you sure you want to update criteria: " + data.Name + "?");
-        if (update == true) {
-            window.sessionStorage.setItem('criteria', JSON.stringify(data));
-            window.location.href = '../CatalogueCriteria/UpdateCriteria';
+        var viewdocument = confirm("Are you sure you want to view document: " + data.Name + "?");
+        if (viewdocument == true) {
+            try {
+                var name = data.Name;
+                var documentID = data.DocumentID;
+
+                var data = { Name: name, DocumentID: documentID};
+                $.ajax({
+                    url: settingsManager.websiteURL + 'api/DocumentAPI/ViewDocument',
+                    type: 'POST',
+                    data: data,
+                    processData: true,
+                    async: true,
+                    cache: false,
+                    success: function (response) {
+                        window.open("data:application/pdf;base64, " + response);
+                    },
+                    error: function (xhr) {
+                        displayMessage("error", 'Error experienced: ' + xhr.responseText);
+                    }
+                });
+
+            } catch (err) {
+                displayMessage("error", "Error encountered: " + err);
+            }
         } else {
             return;
         }

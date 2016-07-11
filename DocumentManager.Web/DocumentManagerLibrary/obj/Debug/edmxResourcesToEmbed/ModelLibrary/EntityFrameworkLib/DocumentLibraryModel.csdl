@@ -46,6 +46,8 @@
     <Property Name="CreatedOn" Type="DateTime" Precision="3" />
     <Property Name="FirstTime" Type="Boolean" />
     <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="DocumentDetails" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users" FromRole="User" ToRole="DocumentDetail" />
+    <NavigationProperty Name="DocumentDetails1" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users1" FromRole="User" ToRole="DocumentDetail" />
   </EntityType>
   <Association Name="FK_RoleFunctions_RoleFunctions">
     <End Role="Functions" Type="Self.Function" Multiplicity="1" />
@@ -102,6 +104,28 @@
     </AssociationSet>
     <EntitySet Name="CatalogueCriterias" EntityType="DocumentManagerDBModel.CatalogueCriteria" />
     <EntitySet Name="PhysicalLocations" EntityType="DocumentManagerDBModel.PhysicalLocation" />
+    <EntitySet Name="Documents" EntityType="DocumentManagerDBModel.Document" />
+    <EntitySet Name="DocumentDetails" EntityType="DocumentManagerDBModel.DocumentDetail" />
+    <AssociationSet Name="FK_DocumentDetail_CatalogueCriteria" Association="DocumentManagerDBModel.FK_DocumentDetail_CatalogueCriteria">
+      <End Role="CatalogueCriteria" EntitySet="CatalogueCriterias" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentDetail_Document" Association="DocumentManagerDBModel.FK_DocumentDetail_Document">
+      <End Role="Document" EntitySet="Documents" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentDetail_PhysicalLocation" Association="DocumentManagerDBModel.FK_DocumentDetail_PhysicalLocation">
+      <End Role="PhysicalLocation" EntitySet="PhysicalLocations" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentDetail_Users" Association="DocumentManagerDBModel.FK_DocumentDetail_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentDetail_Users1" Association="DocumentManagerDBModel.FK_DocumentDetail_Users1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="DocumentDetail" EntitySet="DocumentDetails" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="CatalogueCriteria">
     <Key>
@@ -111,6 +135,7 @@
     <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DocumentDetails" Relationship="DocumentManagerDBModel.FK_DocumentDetail_CatalogueCriteria" FromRole="CatalogueCriteria" ToRole="DocumentDetail" />
   </EntityType>
   <EntityType Name="PhysicalLocation">
     <Key>
@@ -121,5 +146,93 @@
     <Property Name="Location" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DocumentDetails" Relationship="DocumentManagerDBModel.FK_DocumentDetail_PhysicalLocation" FromRole="PhysicalLocation" ToRole="DocumentDetail" />
   </EntityType>
+  <EntityType Name="Document">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RawDocument" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <NavigationProperty Name="DocumentDetails" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Document" FromRole="Document" ToRole="DocumentDetail" />
+  </EntityType>
+  <EntityType Name="DocumentDetail">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="Catalogue" Type="Int64" />
+    <Property Name="Location" Type="Int64" />
+    <Property Name="Uploader" Type="Int64" />
+    <Property Name="CurrentUser" Type="Int64" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <Property Name="DocumentContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DocumentID" Type="Int64" />
+    <NavigationProperty Name="CatalogueCriteria" Relationship="DocumentManagerDBModel.FK_DocumentDetail_CatalogueCriteria" FromRole="DocumentDetail" ToRole="CatalogueCriteria" />
+    <NavigationProperty Name="Document" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Document" FromRole="DocumentDetail" ToRole="Document" />
+    <NavigationProperty Name="PhysicalLocation" Relationship="DocumentManagerDBModel.FK_DocumentDetail_PhysicalLocation" FromRole="DocumentDetail" ToRole="PhysicalLocation" />
+    <NavigationProperty Name="User" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users" FromRole="DocumentDetail" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users1" FromRole="DocumentDetail" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_DocumentDetail_CatalogueCriteria">
+    <End Type="DocumentManagerDBModel.CatalogueCriteria" Role="CatalogueCriteria" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatalogueCriteria">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="Catalogue" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentDetail_Document">
+    <End Type="DocumentManagerDBModel.Document" Role="Document" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Document">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="DocumentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentDetail_PhysicalLocation">
+    <End Type="DocumentManagerDBModel.PhysicalLocation" Role="PhysicalLocation" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PhysicalLocation">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="Location" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentDetail_Users">
+    <End Type="DocumentManagerDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="Uploader" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentDetail_Users1">
+    <End Type="DocumentManagerDBModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentDetail">
+        <PropertyRef Name="CurrentUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

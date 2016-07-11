@@ -25,7 +25,6 @@ String.prototype.trimRight = function (charlist) {
 
 function addBranch() {
     try {
-
         var formValid = $('#demo-form').parsley().validate();
         if (formValid) {
             $('#addBtn').html('<i class="fa fa-spinner fa-spin"></i>');
@@ -44,7 +43,7 @@ function addBranch() {
                 async: true,
                 cache: false,
                 success: function (response) {
-                    displayMessage("success", response, "Branch Management");
+                    displayMessage("success", response);
                     $('#branchName').val('');
                     $('#branchCode').val('');
                     $('#branchAddress').val('');
@@ -52,16 +51,16 @@ function addBranch() {
                     $('#addBtn').html('Add');
                 },
                 error: function (xhr) {
-                    displayMessage("error", 'Error experienced: ' + xhr.responseText, "Branch Management");
+                    displayMessage("error", 'Error experienced: ' + xhr.responseText);
                     $("#addBtn").removeAttr("disabled");
                     $('#addBtn').html('Add');
                 }
             });
         } else {
-            displayMessage("warning", "Fill the required values", "Branch Management");
+            displayMessage("warning", "Fill the required values");
         }
     } catch (err) {
-        displayMessage("error", "Error encountered: " + err, "Branch Management");
+        displayMessage("error", "Error encountered: " + err);
         $("#addBtn").removeAttr("disabled");
         $('#addBtn').html('Add');
     }

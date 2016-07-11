@@ -36,6 +36,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\..\..\..\..\Downloads\itextsharp-all-5.5.9\itextsharp-dll-core\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -51,11 +54,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataLibrary\CatalogueCriteriaDL.cs" />
+    <Compile Include="DataLibrary\DocumentDL.cs" />
     <Compile Include="DataLibrary\FunctionDL.cs" />
     <Compile Include="DataLibrary\PhysicalLocationDL.cs" />
     <Compile Include="DataLibrary\RoleDL.cs" />
     <Compile Include="DataLibrary\UserDL.cs" />
     <Compile Include="ModelLibrary\EntityFrameworkLib\CatalogueCriteria.cs">
+      <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelLibrary\EntityFrameworkLib\Document.cs">
+      <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelLibrary\EntityFrameworkLib\DocumentDetail.cs">
       <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelLibrary\EntityFrameworkLib\DocumentLibraryModel.Context.cs">
@@ -73,6 +83,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DocumentLibraryModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModelLibrary\EntityFrameworkLib\DocumentModel.cs" />
     <Compile Include="ModelLibrary\EntityFrameworkLib\Function.cs">
       <DependentUpon>DocumentLibraryModel.tt</DependentUpon>
     </Compile>
@@ -99,6 +110,7 @@
     <Compile Include="ModelLibrary\Utility\RijndaelEnhanced.cs" />
     <Compile Include="ModelLibrary\Utility\StatusUtil.cs" />
     <Compile Include="ProcessLibrary\CatalogueCriteriaPL.cs" />
+    <Compile Include="ProcessLibrary\DocumentPL.cs" />
     <Compile Include="ProcessLibrary\FunctionPL.cs" />
     <Compile Include="ProcessLibrary\PhysicalLocationPL.cs" />
     <Compile Include="ProcessLibrary\RolePL.cs" />
