@@ -956,6 +956,7 @@
     <Content Include="images\back_enabled.png" />
     <Content Include="images\back_enabled_hover.png" />
     <Content Include="images\copy_csv_xls_pdf.swf" />
+    <Content Include="images\decline.png" />
     <Content Include="images\delete.png" />
     <Content Include="images\details_close.png" />
     <Content Include="images\details_open.png" />
@@ -983,6 +984,7 @@
     <Content Include="Scripts\CatalogueCriteria\ViewCriteria.js" />
     <Content Include="Scripts\Document\ApproveDocument.js" />
     <Content Include="Scripts\Document\RequestDocument.js" />
+    <Content Include="Scripts\Document\Transactions.js" />
     <Content Include="Scripts\Document\Upload.js" />
     <Content Include="Scripts\Document\ViewDocument.js" />
     <Content Include="Scripts\DynamicMenu\Dashboard.js" />
@@ -1088,6 +1090,7 @@
     <Content Include="Views\Document\ViewDocument.cshtml" />
     <Content Include="Views\Document\RequestDocument.cshtml" />
     <Content Include="Views\Document\ApproveDocument.cshtml" />
+    <Content Include="Views\Document\Transactions.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

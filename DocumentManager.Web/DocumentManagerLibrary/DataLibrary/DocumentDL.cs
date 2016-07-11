@@ -117,6 +117,30 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static List<DocumentTransaction> RetrieveDocumentTransactionsforApproval()
+        {
+            try
+            {
+                var status = StatusUtil.RequestStatus.Pending.ToString();
+
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    var docs = context.DocumentTransactions
+                                        .Include(doc => doc.DocumentDetail)
+                                        .Include(doc => doc.User)
+                                        .Include(doc => doc.User1)
+                                        .Where(doc => doc.Status == status)
+                                        .ToList();
+
+                    return docs;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static Document RetrieveDocumentByID(long documentID)
         {
             try
@@ -200,9 +224,48 @@ namespace DocumentManagerLibrary
                                                         .Where(t => t.ID == doc.ID)
                                                         .FirstOrDefault();
 
-                            existingDocTransaction.Status = StatusUtil.RequestStatus.Approved.ToString();
+                            existingDocTransaction.Status = doc.Status;
                             context.Entry(existingDocTransaction).State = EntityState.Modified;
                             context.SaveChanges();
+
+                            transaction.Commit();
+
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            transaction.Rollback();
+                            throw e;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static bool DeclineDocument(DocumentTransaction doc)
+        {
+            try
+            {
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    using (var transaction = context.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            var existingDocTransaction = new DocumentTransaction();
+                            existingDocTransaction = context.DocumentTransactions
+                                                        .Where(t => t.ID == doc.ID)
+                                                        .FirstOrDefault();
+
+                            existingDocTransaction.Status = doc.Status;
+                            context.Entry(existingDocTransaction).State = EntityState.Modified;
+                            context.SaveChanges();
+
+                            transaction.Commit();
 
                             return true;
                         }

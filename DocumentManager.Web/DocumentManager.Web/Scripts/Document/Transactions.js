@@ -33,6 +33,7 @@ String.prototype.trimRight = function (charlist) {
 function getCriteria() {
 
     var user = JSON.parse(window.sessionStorage.getItem("loggedInUser"));
+    var userID = user.ID;
 
     $('#example tfoot th').each(function () {
         var title = $('#example tfoot th').eq($(this).index()).text();
@@ -44,22 +45,14 @@ function getCriteria() {
 
         "processing": true,
 
-        "ajax": settingsManager.websiteURL + 'api/DocumentAPI/RetrieveDocument',
-
-        "columnDefs": [{
-            "targets": 5,
-            "createdCell": function (td, cellData, rowData, row, col) {
-                if (rowData.CurrentUserID === user.ID) {
-                    $(td).attr('class', '');
-                }
-            }
-        }],
+        "ajax": settingsManager.websiteURL + 'api/DocumentAPI/RetrieveDocumentTransaction',
 
         "columns": [
             { "data": "Name" },
-            { "data": "CatalogueCriteria" },
-            { "data": "PhysicalLocation" },
-            { "data": "CurrentUser" },
+            { "data": "FromUser" },
+            { "data": "ToUser" },
+            { "data": "Date" },
+            { "data": "Status" },
             {
                 "className": 'document-control',
                 "orderable": false,
@@ -67,21 +60,7 @@ function getCriteria() {
                 "defaultContent": ''
             },
             {
-                "className": 'request-control',
-                "orderable": false,
-                "data": null,
-                "defaultContent": ''
-            },
-            {
                 "data": "DocumentID",
-                "visible": false
-            },
-            {
-                "data": "CurrentUserID",
-                "visible": false
-            },
-            {
-                "data": "ID",
                 "visible": false
             }
         ],
@@ -112,47 +91,6 @@ function getCriteria() {
         ]
     });
 
-    $('#example tbody').on('click', 'td.request-control', function () {
-        var tr = $(this).closest('tr');
-        var row = table.row(tr);
-        var data = row.data();
-        var viewdocument = confirm("Are you sure you want to request document: " + data.Name + "?");
-        if (viewdocument == true) {
-            try {
-                $('#loadicon').removeClass("hide");
-                var user = JSON.parse(window.sessionStorage.getItem("loggedInUser"));
-
-                var docName = data.Name;
-                var documentID = data.DocumentID;
-                var toUser = user.ID;
-                var fromUser = data.CurrentUserID;
-                var documentdetailID = data.ID;
-
-                var data = { FromUser: fromUser, ToUser: toUser, DocumentID: documentID, DocumentName: docName, DocumentDetailID: documentdetailID };
-                $.ajax({
-                    url: settingsManager.websiteURL + 'api/DocumentAPI/RequestDocument',
-                    type: 'POST',
-                    data: data,
-                    processData: true,
-                    async: true,
-                    cache: false,
-                    success: function (response) {
-                        displayMessage("success", response);
-                        $('#loadicon').addClass("hide");
-                    },
-                    error: function (xhr) {
-                        displayMessage("error", 'Error experienced: ' + xhr.responseText);
-                    }
-                });
-
-            } catch (err) {
-                displayMessage("error", "Error encountered: " + err);
-            }
-        } else {
-            return;
-        }
-    });
-
     $('#example tbody').on('click', 'td.document-control', function () {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
@@ -161,6 +99,7 @@ function getCriteria() {
         if (viewdocument == true) {
             try {
                 $('#loadicon').removeClass("hide");
+
                 var name = data.Name;
                 var documentID = data.DocumentID;
 
@@ -180,6 +119,7 @@ function getCriteria() {
                         displayMessage("error", 'Error experienced: ' + xhr.responseText);
                     }
                 });
+
             } catch (err) {
                 displayMessage("error", "Error encountered: " + err);
             }

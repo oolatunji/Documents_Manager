@@ -1,23 +1,18 @@
 ﻿
 @{
-    ViewBag.Title = "Approve Document";
+    ViewBag.Title = "Transactions";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style type="text/css">
-    .hide {
-        display: none;
-    }
-</style>
-@Scripts.Render("~/approvedocument")
+@Scripts.Render("~/transactions")
 <div id="page-title">
     <h2>DOCUMENT MANAGEMENT</h2>
-    <p>Approve Document</p>
+    <p>Document Transactions</p>
 </div>
 <div class="panel">
     <div class="panel-body">
         <h3 class="title-hero">
-            <i class="glyph-icon icon-th-list"></i> Document List
+            <i class="glyph-icon icon-th-list"></i> Transactions
             <span id="loadicon" class="hide"><img src="~/assets/images/spinner/loader-dark.gif" width="15px" height="15px" /></span>
         </h3>
         <div class="example-box-wrapper">
@@ -25,11 +20,10 @@
                 <thead>
                     <tr>
                         <th>Document</th>
-                        <th>Requesting User</th>
+                        <th>From User</th>
+                        <th>To User</th>
                         <th>Date</th>
                         <th>Status</th>
-                        <th></th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
@@ -38,10 +32,9 @@
                     <tr>
                         <th>Document</th>
                         <th>Requesting User</th>
+                        <th>To User</th>
                         <th>Date</th>
                         <th>Status</th>
-                        <th></th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </tfoot>
@@ -49,4 +42,6 @@
         </div>
     </div>
 </div>
+
+
 

@@ -163,8 +163,8 @@ namespace DocumentManagerLibrary
             {
                 string key = System.Configuration.ConfigurationManager.AppSettings.Get("ekey");
 
-                string userFullName = toUser.Lastname + " " + toUser.Othernames;
-                string fromUserFullName = fromUser.Lastname + " " + fromUser.Othernames;
+                string userFullName = fromUser.Lastname + " " + fromUser.Othernames;
+                string toUserFullName = toUser.Lastname + " " + toUser.Othernames;
 
                 string organization = System.Configuration.ConfigurationManager.AppSettings.Get("Organization");
                 string applicationName = System.Configuration.ConfigurationManager.AppSettings.Get("ApplicationName");
@@ -205,11 +205,11 @@ namespace DocumentManagerLibrary
                 body = body.Replace("#UserFullName", userFullName);
                 body = body.Replace("#WebsiteUrl", websiteUrl);
                 body = body.Replace("#DocumentName", documentName);
-                body = body.Replace("#Requester", fromUserFullName);
+                body = body.Replace("#Requester", toUserFullName);
 
                 Thread email = new Thread(delegate()
                 {
-                    Mail.SendMail(toUser.Email, fromAddress, subject, body, smtpHost, smtpPort, smtpUseDefaultCredentials, smtpUsername, smtpPassword, smtpEnableSsl);
+                    Mail.SendMail(fromUser.Email, fromAddress, subject, body, smtpHost, smtpPort, smtpUseDefaultCredentials, smtpUsername, smtpPassword, smtpEnableSsl);
 
                 });
 

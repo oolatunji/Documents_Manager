@@ -55,6 +55,14 @@ tr.shown td.request-control {
     background: url('../images/request.png') no-repeat center center;
 }
 
+td.decline-control {
+    background: url('../images/decline.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.decline-control {
+    background: url('../images/decline.png') no-repeat center center;
+}
+
 tfoot input {
         width: 100%;
         padding: 3px;

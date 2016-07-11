@@ -149,6 +149,10 @@ namespace DocumentManager.Web
                    "~/Scripts/Document/ApproveDocument.js"
                    ));
 
+            bundles.Add(new ScriptBundle("~/transactions").Include(
+                   "~/Scripts/Document/Transactions.js"
+                   ));
+
             bundles.Add(new StyleBundle("~/common/css").Include(
                       "~/assets/helpers/animate.css",
                       "~/assets/helpers/boilerplate.css",

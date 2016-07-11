@@ -96,6 +96,7 @@ function getCriteria() {
         var viewdocument = confirm("Are you sure you want to view document: " + data.Name + "?");
         if (viewdocument == true) {
             try {
+                $('#loadicon').removeClass("hide");
                 var name = data.Name;
                 var documentID = data.DocumentID;
 
@@ -108,6 +109,7 @@ function getCriteria() {
                     async: true,
                     cache: false,
                     success: function (response) {
+                        $('#loadicon').addClass("hide");
                         window.open("data:application/pdf;base64, " + response);
                     },
                     error: function (xhr) {

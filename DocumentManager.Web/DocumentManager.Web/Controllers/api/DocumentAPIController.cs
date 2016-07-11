@@ -84,22 +84,60 @@ namespace DocumentManager.Web.Controllers.api
 
                 var docTransaction = new DocumentTransaction
                 {
-                    FromUser = model.FromUser,
+                    ID = model.ID,
                     ToUser = model.ToUser,
-                    Date = System.DateTime.Now,
                     DocumentID = model.DocumentID,
                     DocumentDetailID = model.DocumentDetailID,
-                    Status = StatusUtil.RequestStatus.Pending.ToString()
+                    Status = StatusUtil.RequestStatus.Approved.ToString()
                 };
 
                 bool result = DocumentPL.ApproveDocument(docTransaction);
                 if (result)
                 {
-                    var fromUser = UserPL.RetrieveUserByID(model.FromUser);
+                    var toUser = UserPL.RetrieveUserByID(model.ToUser);
 
-                    Mail.SendApproveDocumentMail(fromUser, model.DocumentName);
+                    Mail.SendApproveDocumentMail(toUser, model.DocumentName);
 
                     return Request.CreateResponse(HttpStatusCode.OK, "Request approved successfully.");
+                }
+                else
+                {
+                    var response = Request.CreateResponse(HttpStatusCode.BadRequest, "Request failed");
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                var response = Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+                return response;
+            }
+        }
+
+        [HttpPost]
+        public HttpResponseMessage DeclineDocument([FromBody]DocumentTransactionModel model)
+        {
+            try
+            {
+                string errMsg = string.Empty;
+
+                var docTransaction = new DocumentTransaction
+                {
+                    ID = model.ID,
+                    ToUser = model.ToUser,
+                    DocumentID = model.DocumentID,
+                    DocumentDetailID = model.DocumentDetailID,
+                    Status = StatusUtil.RequestStatus.Declined.ToString()
+                };
+
+                bool result = DocumentPL.DeclineDocument(docTransaction);
+                if (result)
+                {
+                    var toUser = UserPL.RetrieveUserByID(model.ToUser);
+
+                    Mail.SendApproveDocumentMail(toUser, model.DocumentName);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, "Request declined successfully.");
                 }
                 else
                 {
@@ -163,6 +201,24 @@ namespace DocumentManager.Web.Controllers.api
             try
             {
                 IEnumerable<Object> documents = DocumentPL.RetrieveDocumentTransactions();
+                object returnedDocuments = new { data = documents };
+                return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                var response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                response.ReasonPhrase = ex.Message;
+                return response;
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage RetrieveDocumentTransactionsforApproval()
+        {
+            try
+            {
+                IEnumerable<Object> documents = DocumentPL.RetrieveDocumentTransactionsforApproval();
                 object returnedDocuments = new { data = documents };
                 return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
             }

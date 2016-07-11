@@ -8,6 +8,7 @@ namespace DocumentManagerLibrary
 {
     public class DocumentTransactionModel
     {
+        public long ID { get; set; }
         public long FromUser { get; set; }
         public long ToUser { get; set; }
         public long DocumentID { get; set; }

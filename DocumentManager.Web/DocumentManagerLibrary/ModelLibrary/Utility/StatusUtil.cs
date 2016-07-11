@@ -17,7 +17,8 @@ namespace DocumentManagerLibrary
         public enum RequestStatus
         {
             Pending,
-            Approved
+            Approved,
+            Declined
         }
     }
 }

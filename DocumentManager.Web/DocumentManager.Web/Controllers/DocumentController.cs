@@ -28,5 +28,10 @@ namespace DocumentManager.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Transactions()
+        {
+            return View();
+        }
     }
 }
