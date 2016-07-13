@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     try {
         getCriteria();
+        setTimeout(autoSuggest, 3000);
     } catch (err) {
         displayMessage("error", "Error encountered: " + err);
     }
@@ -13,6 +14,47 @@ String.prototype.trimRight = function (charlist) {
     return this.replace(new RegExp("[" + charlist + "]+$"), "");
 };
 
+function autoSuggest() {
+    $.ajax({
+        url: settingsManager.websiteURL + 'api/DocumentAPI/RetrieveSearchLists',
+        type: 'GET',
+        async: true,
+        cache: false,
+        success: function (response) {
+            var options = {
+                data: response,
+                list: {
+                    maxNumberOfElements: 15,
+                    match: {
+                        enabled: true
+                    }
+                }
+            };
+            $("#searchValue").easyAutocomplete(options);
+        },
+        error: function (xhr) {
+            displayMessage("error", 'Error experienced: ' + xhr.responseText);
+        }
+    });
+}
+
+function search() {
+
+    var searchValue = $('#searchValue').val();
+
+    if (searchValue.length != "") {
+        if (window.sessionStorage.getItem("searchValue") != null)
+            window.sessionStorage.removeItem("searchValue");
+
+        window.sessionStorage.setItem("searchValue", searchValue);
+        refreshResult();
+        setTimeout(autoSuggest, 3000);
+    } else {
+        displayMessage("error", "Error encountered: Search criteria is required.");
+    }
+
+   
+}
 
 function getCriteria() {
 
@@ -33,7 +75,7 @@ function getCriteria() {
             "url": settingsManager.websiteURL + 'api/DocumentAPI/SearchDocument',
             "type": "POST",
             "data": function (d) {
-                d.SearchValue = searchValue;
+                d.SearchValue = window.sessionStorage.getItem("searchValue");
             },
         },
 

@@ -14,6 +14,7 @@ namespace DocumentManager.Web
                       "~/assets/js-core/jquery-ui-widget.js",
                       "~/assets/js-core/jquery-ui-mouse.js",
                       "~/assets/js-core/jquery-ui-position.js",
+                      "~/assets/easyautocomplete/jquery.easy-autocomplete.min.js",
                       "~/assets/js-core/transition.js",
                       "~/assets/js-core/modernizr.js",
                       "~/assets/datatables/jquery.dataTables.min.js",
@@ -211,7 +212,9 @@ namespace DocumentManager.Web
                       "~/assets/themes/components/default.css",
                       "~/assets/themes/components/border-radius.css",
                       "~/assets/helpers/responsive-elements.css",
-                      "~/assets/helpers/admin-responsive.css"));
+                      "~/assets/helpers/admin-responsive.css",
+                      "~/assets/easyautocomplete/easy-autocomplete.min.css",
+                      "~/assets/easyautocomplete/easy-autocomplete.themes.min.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

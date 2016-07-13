@@ -171,10 +171,35 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static List<string> RetrieveSearchLists()
+        {
+            try
+            {
+                var searchList = new List<string>();
+
+                var list = DocumentDL.RetrieveSearchLists();
+
+                if(list.Any())
+                {
+                    list.ForEach(search =>
+                    {
+                        searchList.Add(search.Subject);
+                    });
+                }
+                return searchList;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static List<Object> SearchDocuments(List<string> searchValues, string queryString)
         {
             try
             {
+                DocumentDL.SaveSearchSubject(queryString);
+
                 var returnedDocs = new List<object>();
 
                 var docs = DocumentDL.SearchDocuments(searchValues);
@@ -196,8 +221,6 @@ namespace DocumentManagerLibrary
 
                     returnedDocs.Add(docObj);
                 }
-
-                //DocumentDL.SaveSearchSubject(queryString);
 
                 return returnedDocs;
             }

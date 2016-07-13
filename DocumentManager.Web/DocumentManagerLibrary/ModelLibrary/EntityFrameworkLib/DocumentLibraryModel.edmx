@@ -87,7 +87,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Subject" Type="text" />
+          <Property Name="Subject" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -426,7 +426,6 @@
             <End Role="DocumentDetail" EntitySet="DocumentDetails" />
           </AssociationSet>
           <EntitySet Name="DocumentTransactions" EntityType="DocumentManagerDBModel.DocumentTransaction" />
-          <EntitySet Name="SearchLists" EntityType="DocumentManagerDBModel.SearchList" />
           <AssociationSet Name="FK_DocumentTransaction_DocumentDetail" Association="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail">
             <End Role="DocumentDetail" EntitySet="DocumentDetails" />
             <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
@@ -439,6 +438,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
           </AssociationSet>
+          <EntitySet Name="SearchLists" EntityType="DocumentManagerDBModel.SearchList" />
           </EntityContainer>
         <EntityType Name="CatalogueCriteria">
           <Key>
@@ -564,13 +564,6 @@
           <NavigationProperty Name="User" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users" FromRole="DocumentTransaction" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users1" FromRole="DocumentTransaction" ToRole="User" />
         </EntityType>
-        <EntityType Name="SearchList">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
         <Association Name="FK_DocumentTransaction_DocumentDetail">
           <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="0..1" />
           <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
@@ -607,6 +600,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SearchList">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

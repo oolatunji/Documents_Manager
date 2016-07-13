@@ -201,8 +201,9 @@ namespace DocumentManager.Web.Controllers.api
         {
             try
             {
-                var searchValues = model.SearchValue.Split(' ');
-                IEnumerable<Object> documents = DocumentPL.SearchDocuments(searchValues.ToList(), model.SearchValue);
+                var searchValues = model.SearchValue != null ? model.SearchValue.Trim().Split(' ') : new string[] { };
+                var searchSubject = model.SearchValue != null ? model.SearchValue : string.Empty;
+                IEnumerable<Object> documents = DocumentPL.SearchDocuments(searchValues.ToList(), searchSubject.Trim());
                 object returnedDocuments = new { data = documents };
                 return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
             }
@@ -223,6 +224,23 @@ namespace DocumentManager.Web.Controllers.api
                 IEnumerable<Object> documents = DocumentPL.RetrieveDocumentTransactions();
                 object returnedDocuments = new { data = documents };
                 return Request.CreateResponse(HttpStatusCode.OK, returnedDocuments);
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.WriteError(ex);
+                var response = Request.CreateResponse(HttpStatusCode.BadRequest);
+                response.ReasonPhrase = ex.Message;
+                return response;
+            }
+        }
+
+        [HttpGet]
+        public HttpResponseMessage RetrieveSearchLists()
+        {
+            try
+            {
+                IEnumerable<string> documents = DocumentPL.RetrieveSearchLists();
+                return Request.CreateResponse(HttpStatusCode.OK, documents);
             }
             catch (Exception ex)
             {

@@ -131,6 +131,42 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static List<Int64?> RetrieveUsersByName(List<string> searchValues)
+        {
+            try
+            {
+                var criteriaIDs = new List<Int64?>();
+
+                var criteriaList = new List<User>();
+
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    searchValues.ForEach(searchValue =>
+                    {
+                        var criterias = context.Users
+                                            .Where(cri => cri.Lastname.Contains(searchValue) || cri.Othernames.Contains(searchValue))
+                                            .ToList();
+
+                        criteriaList.AddRange(criterias);
+
+                    });
+
+                    if (criteriaList.Any())
+                    {
+                        criteriaList.ForEach(criteria =>
+                        {
+                            criteriaIDs.Add(criteria.ID);
+                        });
+                    }
+                    return criteriaIDs;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static User AuthenticateUser(string username, string hashedPassword)
         {
             try

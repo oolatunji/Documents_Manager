@@ -22,10 +22,10 @@
         <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentDetail_Users" />
         <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentDetail_Users1" />
         <EntityTypeShape EntityType="DocumentManagerDBModel.DocumentTransaction" Width="1.5" PointX="9.875" PointY="5.125" />
-        <EntityTypeShape EntityType="DocumentManagerDBModel.SearchList" Width="1.5" PointX="7.375" PointY="0.75" />
         <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail" />
         <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentTransaction_Users" />
         <AssociationConnector Association="DocumentManagerDBModel.FK_DocumentTransaction_Users1" />
+        <EntityTypeShape EntityType="DocumentManagerDBModel.SearchList" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

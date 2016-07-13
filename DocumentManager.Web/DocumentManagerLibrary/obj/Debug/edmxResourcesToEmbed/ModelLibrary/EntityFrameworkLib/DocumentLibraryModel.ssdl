@@ -82,7 +82,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Subject" Type="text" />
+    <Property Name="Subject" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="Users">
     <Key>

@@ -43,8 +43,13 @@ namespace DocumentManagerLibrary
 
                 using (var context = new DocumentManagerDBEntities())
                 {
-                    context.SearchLists.Add(searchList);
-                    context.SaveChanges();
+                    var existingSearchVal = context.SearchLists.Where(search => search.Subject == searchValue).ToList();
+                    if(!existingSearchVal.Any())
+                    {
+                        context.SearchLists.Add(searchList);
+                        context.SaveChanges();
+                    }
+                    
                 }
                 return true;
             }
@@ -116,6 +121,24 @@ namespace DocumentManagerLibrary
             }
         }
 
+        public static List<SearchList> RetrieveSearchLists()
+        {
+            try
+            {
+                using (var context = new DocumentManagerDBEntities())
+                {
+                    var seachLists = context.SearchLists
+                                        .ToList();
+
+                    return seachLists;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static List<DocumentTransaction> RetrieveDocumentTransactions()
         {
             try
@@ -171,6 +194,7 @@ namespace DocumentManagerLibrary
                 {
                     var locations = PhysicalLocationDL.RetrieveLocationsByName(searchValues);
                     var criteriaIDs = CatalogueCriteriaDL.RetrieveCriteriasByName(searchValues);
+                    var userIDs = UserDL.RetrieveUsersByName(searchValues);
 
                     var documents = new List<DocumentDetail>();
                     var docIDs = new List<Int64?>();
@@ -197,7 +221,7 @@ namespace DocumentManagerLibrary
                     }
 
                     var returendDocuments = context.DocumentDetails
-                                                    .Where(doc => docIDs.Contains(doc.ID) || locations.Contains(doc.Location) || criteriaIDs.Contains(doc.Catalogue))
+                                                    .Where(doc => docIDs.Contains(doc.ID) || locations.Contains(doc.Location) || criteriaIDs.Contains(doc.Catalogue) || userIDs.Contains(doc.CurrentUser))
                                                     .Include(doc => doc.CatalogueCriteria)
                                                     .Include(doc => doc.PhysicalLocation)
                                                     .Include(doc => doc.User)
