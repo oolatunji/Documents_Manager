@@ -32,7 +32,7 @@ function addLocation() {
             $("#addBtn").attr("disabled", "disabled");
 
             var locationName = $('#locationName').val().toUpperCase();
-            var location = $('#location').val();
+            var location = $('#location').val().toUpperCase();
             var locationDecription = $('#locationDecription').val();
 
             var data = { Name: locationName, Description: locationDecription, Location: location };

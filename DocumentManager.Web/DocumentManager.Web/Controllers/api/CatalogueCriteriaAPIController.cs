@@ -20,7 +20,7 @@ namespace DocumentManager.Web.Controllers.api
                 criteria.Date = System.DateTime.Now;
                 bool result = CatalogueCriteriaPL.Save(criteria, out errMsg);
                 if (string.IsNullOrEmpty(errMsg))
-                    return result.Equals(true) ? Request.CreateResponse(HttpStatusCode.OK, "Criteria added successfully.") : Request.CreateResponse(HttpStatusCode.BadRequest, "Request failed");
+                    return result.Equals(true) ? Request.CreateResponse(HttpStatusCode.OK, "Way house added successfully.") : Request.CreateResponse(HttpStatusCode.BadRequest, "Request failed");
                 else
                 {
                     var response = Request.CreateResponse(HttpStatusCode.BadRequest, errMsg);
@@ -41,7 +41,7 @@ namespace DocumentManager.Web.Controllers.api
             try
             {
                 bool result = CatalogueCriteriaPL.Update(criteria);
-                return result.Equals(true) ? Request.CreateResponse(HttpStatusCode.OK, "Criteria updated successfully") : Request.CreateResponse(HttpStatusCode.BadRequest, "Request failed");
+                return result.Equals(true) ? Request.CreateResponse(HttpStatusCode.OK, "Way house updated successfully") : Request.CreateResponse(HttpStatusCode.BadRequest, "Request failed");
             }
             catch (Exception ex)
             {

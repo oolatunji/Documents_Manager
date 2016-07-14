@@ -44,7 +44,7 @@ namespace DocumentManager.Web.Controllers.api
 
                 var docTransaction = new DocumentTransaction
                 {
-                    FromUser = model.FromUser,
+                    FromWareHouse = model.FromUser,
                     ToUser = model.ToUser,
                     Date = System.DateTime.Now,
                     DocumentID = model.DocumentID,
@@ -55,11 +55,6 @@ namespace DocumentManager.Web.Controllers.api
                 bool result = DocumentPL.RequestDocument(docTransaction);
                 if (result)
                 {
-                    var fromUser = UserPL.RetrieveUserByID(model.FromUser);
-                    var toUser = UserPL.RetrieveUserByID(model.ToUser);
-
-                    Mail.SendRequestDocumentMail(fromUser, toUser, model.DocumentName);
-
                     return Request.CreateResponse(HttpStatusCode.OK, "Request made successfully.");
                 }
                 else
@@ -95,10 +90,6 @@ namespace DocumentManager.Web.Controllers.api
                 bool result = DocumentPL.ApproveDocument(docTransaction);
                 if (result)
                 {
-                    var toUser = UserPL.RetrieveUserByID(model.ToUser);
-
-                    Mail.SendApproveDocumentMail(toUser, model.DocumentName);
-
                     return Request.CreateResponse(HttpStatusCode.OK, "Request approved successfully.");
                 }
                 else

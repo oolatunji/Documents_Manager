@@ -93,7 +93,7 @@ function getCriteria() {
         var tr = $(this).closest('tr');
         var row = table.row(tr);
         var data = row.data();
-        var update = confirm("Are you sure you want to update criteria: " + data.Name + "?");
+        var update = confirm("Are you sure you want to update way house: " + data.Name + "?");
         if (update == true) {
             window.sessionStorage.setItem('criteria', JSON.stringify(data));
             window.location.href = '../CatalogueCriteria/UpdateCriteria';

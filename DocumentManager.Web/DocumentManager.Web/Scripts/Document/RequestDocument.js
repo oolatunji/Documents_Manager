@@ -33,6 +33,7 @@ String.prototype.trimRight = function (charlist) {
 function getCriteria() {
 
     var user = JSON.parse(window.sessionStorage.getItem("loggedInUser"));
+    var username = user.Username.toUpperCase();
 
     $('#example tfoot th').each(function () {
         var title = $('#example tfoot th').eq($(this).index()).text();
@@ -47,9 +48,9 @@ function getCriteria() {
         "ajax": settingsManager.websiteURL + 'api/DocumentAPI/RetrieveDocument',
 
         "columnDefs": [{
-            "targets": 5,
+            "targets": 4,
             "createdCell": function (td, cellData, rowData, row, col) {
-                if (rowData.CurrentUserID === user.ID) {
+                if (rowData.CatalogueCriteria === username) {
                     $(td).attr('class', '');
                 }
             }
@@ -59,7 +60,6 @@ function getCriteria() {
             { "data": "Name" },
             { "data": "CatalogueCriteria" },
             { "data": "PhysicalLocation" },
-            { "data": "CurrentUser" },
             {
                 "className": 'document-control',
                 "orderable": false,
@@ -125,7 +125,7 @@ function getCriteria() {
                 var docName = data.Name;
                 var documentID = data.DocumentID;
                 var toUser = user.ID;
-                var fromUser = data.CurrentUserID;
+                var fromUser = data.WayHouseID;
                 var documentdetailID = data.ID;
 
                 var data = { FromUser: fromUser, ToUser: toUser, DocumentID: documentID, DocumentName: docName, DocumentDetailID: documentdetailID };

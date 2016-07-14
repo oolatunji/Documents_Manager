@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Search Document";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -7,52 +6,62 @@
 @Scripts.Render("~/search")
 <div id="page-title">
     <h2>DOCUMENT MANAGEMENT</h2>
-    <p>Document Search Result</p>
+    <p>Document Search Engine</p>
 </div>
 <div class="panel">
     <div class="panel-body">
         <h3 class="title-hero">
-            <i class="glyph-icon icon-th-list"></i> Documents Found
+            <i class="glyph-icon icon-search"></i> Search for document
             <span id="loadicon" class="hide"><img src="~/assets/images/spinner/loader-dark.gif" width="15px" height="15px" /></span>
         </h3>
         <div class="example-box-wrapper">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Search Criteria</label>
-                            <div class="col-sm-10">
-                                <input type="text" readonly="readonly" class="form-control" id="searchValue">
-                            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <input type="text" placeholder="Enter Search Criteria" class="form-control" id="searchValue">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <button type="button" id="addBtn" class="btn btn-lg btn-info" onclick="search()">Search</button>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-        <div class="example-box-wrapper">
-            <table id="example" class="cell-border hover order-column cell-border" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th>Document</th>
-                        <th>Catalogue Criteria</th>
-                        <th>Physical Location</th>
-                        <th>Uploader</th>
-                        <th>Way House</th>
-                        <th>Date</th>
-                        <th></th>
-                    </tr>
-                </thead>
+        <div class="panel-body">
+            <h3 class="title-hero">
+                <i class="glyph-icon icon-th-list"></i> Document List
+                <span id="loadicon" class="hide"><img src="~/assets/images/spinner/loader-dark.gif" width="15px" height="15px" /></span>
+            </h3>
+            <div class="example-box-wrapper">
+                <table id="example" class="cell-border hover order-column cell-border" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Document</th>
+                            <th>Catalogue Criteria</th>
+                            <th>Physical Location</th>
+                            <th>Uploader</th>
+                            <th>Way House</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
-                <tfoot>
-                    <tr>
-                        <th>Document</th>
-                        <th>Catalogue Criteria</th>
-                        <th>Physical Location</th>
-                        <th>Uploader</th>
-                        <th>Way House</th>
-                        <th>Date</th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-            </table>
+                    <tfoot>
+                        <tr>
+                            <th>Document</th>
+                            <th>Catalogue Criteria</th>
+                            <th>Physical Location</th>
+                            <th>Uploader</th>
+                            <th>Way House</th>
+                            <th>Date</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
 </div>

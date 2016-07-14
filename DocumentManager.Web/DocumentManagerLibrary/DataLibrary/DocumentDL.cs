@@ -150,7 +150,8 @@ namespace DocumentManagerLibrary
                                         .Include("DocumentDetail.CatalogueCriteria")
                                         .Include("DocumentDetail.PhysicalLocation")
                                         .Include(doc => doc.User)
-                                        .Include(doc => doc.User1)
+                                        .Include(doc => doc.CatalogueCriteria)
+                                        .Include(doc => doc.CatalogueCriteria1)
                                         .ToList();
 
                     return docs;
@@ -173,7 +174,7 @@ namespace DocumentManagerLibrary
                     var docs = context.DocumentTransactions
                                         .Include(doc => doc.DocumentDetail)
                                         .Include(doc => doc.User)
-                                        .Include(doc => doc.User1)
+                                        .Include(doc => doc.CatalogueCriteria)
                                         .Where(doc => doc.Status == status)
                                         .ToList();
 
@@ -306,12 +307,46 @@ namespace DocumentManagerLibrary
                     {
                         try
                         {
+                            var user = UserDL.RetrieveUserByID(Convert.ToInt64(doc.ToUser));
+                            var username = user.Username.ToUpper();
+
+                            var existingWarehouse = context.CatalogueCriterias.Where(x => x.Name == username).ToList();
+                            if (!existingWarehouse.Any())
+                            {
+                                var wayhouse = new CatalogueCriteria
+                                    {
+                                        Name = username,
+                                        Description = string.Format("{0} {1}", user.Lastname, user.Othernames)
+                                    };
+                                context.CatalogueCriterias.Add(wayhouse);
+                                context.SaveChanges();
+
+                                existingWarehouse.Add(wayhouse);
+                            }
+
+                            var existingLocation = context.PhysicalLocations.Where(x => x.Name == username).ToList();
+                            if (!existingLocation.Any())
+                            {
+                                var location = new PhysicalLocation
+                                {
+                                    Name = user.Username.ToUpper(),
+                                    Location = string.Format("{0} {1}", user.Lastname, user.Othernames),
+                                    Description = string.Format("{0} {1}", user.Lastname, user.Othernames)
+                                };
+                                context.PhysicalLocations.Add(location);
+                                context.SaveChanges();
+
+                                existingLocation.Add(location);
+                            }
+
                             var existingDoc = new DocumentDetail();
                             existingDoc = context.DocumentDetails
                                             .Where(t => t.ID == doc.DocumentDetailID)
                                             .FirstOrDefault();
 
                             existingDoc.CurrentUser = doc.ToUser;
+                            existingDoc.Catalogue = existingWarehouse.FirstOrDefault().ID;
+                            existingDoc.Location = existingLocation.FirstOrDefault().ID;
                             context.Entry(existingDoc).State = EntityState.Modified;
                             context.SaveChanges();
 

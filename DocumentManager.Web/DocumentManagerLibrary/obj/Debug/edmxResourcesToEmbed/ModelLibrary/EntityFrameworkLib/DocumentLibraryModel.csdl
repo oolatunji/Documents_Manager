@@ -49,7 +49,6 @@
     <NavigationProperty Name="DocumentDetails" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users" FromRole="User" ToRole="DocumentDetail" />
     <NavigationProperty Name="DocumentDetails1" Relationship="DocumentManagerDBModel.FK_DocumentDetail_Users1" FromRole="User" ToRole="DocumentDetail" />
     <NavigationProperty Name="DocumentTransactions" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users" FromRole="User" ToRole="DocumentTransaction" />
-    <NavigationProperty Name="DocumentTransactions1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users1" FromRole="User" ToRole="DocumentTransaction" />
   </EntityType>
   <Association Name="FK_RoleFunctions_RoleFunctions">
     <End Role="Functions" Type="Self.Function" Multiplicity="1" />
@@ -128,7 +127,16 @@
       <End Role="User" EntitySet="Users" />
       <End Role="DocumentDetail" EntitySet="DocumentDetails" />
     </AssociationSet>
+    <EntitySet Name="SearchLists" EntityType="DocumentManagerDBModel.SearchList" />
     <EntitySet Name="DocumentTransactions" EntityType="DocumentManagerDBModel.DocumentTransaction" />
+    <AssociationSet Name="FK_DocumentTransaction_CatalogueCriteria" Association="DocumentManagerDBModel.FK_DocumentTransaction_CatalogueCriteria">
+      <End Role="CatalogueCriteria" EntitySet="CatalogueCriterias" />
+      <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentTransaction_WayHouse" Association="DocumentManagerDBModel.FK_DocumentTransaction_WayHouse">
+      <End Role="CatalogueCriteria" EntitySet="CatalogueCriterias" />
+      <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
+    </AssociationSet>
     <AssociationSet Name="FK_DocumentTransaction_DocumentDetail" Association="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail">
       <End Role="DocumentDetail" EntitySet="DocumentDetails" />
       <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
@@ -137,11 +145,6 @@
       <End Role="User" EntitySet="Users" />
       <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
     </AssociationSet>
-    <AssociationSet Name="FK_DocumentTransaction_Users1" Association="DocumentManagerDBModel.FK_DocumentTransaction_Users1">
-      <End Role="User" EntitySet="Users" />
-      <End Role="DocumentTransaction" EntitySet="DocumentTransactions" />
-    </AssociationSet>
-    <EntitySet Name="SearchLists" EntityType="DocumentManagerDBModel.SearchList" />
   </EntityContainer>
   <EntityType Name="CatalogueCriteria">
     <Key>
@@ -152,6 +155,8 @@
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Date" Type="DateTime" Precision="3" />
     <NavigationProperty Name="DocumentDetails" Relationship="DocumentManagerDBModel.FK_DocumentDetail_CatalogueCriteria" FromRole="CatalogueCriteria" ToRole="DocumentDetail" />
+    <NavigationProperty Name="DocumentTransactions" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_CatalogueCriteria" FromRole="CatalogueCriteria" ToRole="DocumentTransaction" />
+    <NavigationProperty Name="DocumentTransactions1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_WayHouse" FromRole="CatalogueCriteria" ToRole="DocumentTransaction" />
   </EntityType>
   <EntityType Name="PhysicalLocation">
     <Key>
@@ -252,21 +257,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="SearchList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
   <EntityType Name="DocumentTransaction">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="FromUser" Type="Int64" />
+    <Property Name="FromWareHouse" Type="Int64" />
     <Property Name="ToUser" Type="Int64" />
     <Property Name="Date" Type="DateTime" Precision="3" />
     <Property Name="DocumentID" Type="Int64" />
     <Property Name="DocumentDetailID" Type="Int64" />
     <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ToWareHouse" Type="Int64" />
+    <NavigationProperty Name="CatalogueCriteria" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_CatalogueCriteria" FromRole="DocumentTransaction" ToRole="CatalogueCriteria" />
+    <NavigationProperty Name="CatalogueCriteria1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_WayHouse" FromRole="DocumentTransaction" ToRole="CatalogueCriteria" />
     <NavigationProperty Name="DocumentDetail" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_DocumentDetail" FromRole="DocumentTransaction" ToRole="DocumentDetail" />
     <NavigationProperty Name="User" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users" FromRole="DocumentTransaction" ToRole="User" />
-    <NavigationProperty Name="User1" Relationship="DocumentManagerDBModel.FK_DocumentTransaction_Users1" FromRole="DocumentTransaction" ToRole="User" />
   </EntityType>
+  <Association Name="FK_DocumentTransaction_CatalogueCriteria">
+    <End Type="DocumentManagerDBModel.CatalogueCriteria" Role="CatalogueCriteria" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatalogueCriteria">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentTransaction">
+        <PropertyRef Name="ToWareHouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentTransaction_WayHouse">
+    <End Type="DocumentManagerDBModel.CatalogueCriteria" Role="CatalogueCriteria" Multiplicity="0..1" />
+    <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatalogueCriteria">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentTransaction">
+        <PropertyRef Name="FromWareHouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DocumentTransaction_DocumentDetail">
     <End Type="DocumentManagerDBModel.DocumentDetail" Role="DocumentDetail" Multiplicity="0..1" />
     <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
@@ -287,27 +325,8 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="DocumentTransaction">
-        <PropertyRef Name="FromUser" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_DocumentTransaction_Users1">
-    <End Type="DocumentManagerDBModel.User" Role="User" Multiplicity="0..1" />
-    <End Type="DocumentManagerDBModel.DocumentTransaction" Role="DocumentTransaction" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DocumentTransaction">
         <PropertyRef Name="ToUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="SearchList">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Subject" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-  </EntityType>
 </Schema>

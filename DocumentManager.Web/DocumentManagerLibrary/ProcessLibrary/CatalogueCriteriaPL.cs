@@ -20,7 +20,7 @@ namespace DocumentManagerLibrary
             {
                 if (CatalogueCriteriaDL.CriteriaExists(criteria))
                 {
-                    message = string.Format("Criteria with name: {0} exists already", criteria.Name);
+                    message = string.Format("Way house with name: {0} exists already", criteria.Name);
                     return false;
                 }
                 else

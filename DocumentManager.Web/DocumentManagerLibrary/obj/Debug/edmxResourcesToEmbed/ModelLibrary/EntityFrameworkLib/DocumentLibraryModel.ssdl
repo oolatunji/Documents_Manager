@@ -35,12 +35,13 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="FromUser" Type="bigint" />
+    <Property Name="FromWareHouse" Type="bigint" />
     <Property Name="ToUser" Type="bigint" />
     <Property Name="Date" Type="datetime" />
     <Property Name="DocumentID" Type="bigint" />
     <Property Name="DocumentDetailID" Type="bigint" />
     <Property Name="Status" Type="nvarchar" MaxLength="50" />
+    <Property Name="ToWareHouse" Type="bigint" />
   </EntityType>
   <EntityType Name="Functions">
     <Key>
@@ -160,6 +161,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_DocumentTransaction_CatalogueCriteria">
+    <End Role="CatalogueCriteria" Type="Self.CatalogueCriteria" Multiplicity="0..1" />
+    <End Role="DocumentTransaction" Type="Self.DocumentTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CatalogueCriteria">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DocumentTransaction">
+        <PropertyRef Name="ToWareHouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_DocumentTransaction_DocumentDetail">
     <End Role="DocumentDetail" Type="Self.DocumentDetail" Multiplicity="0..1" />
     <End Role="DocumentTransaction" Type="Self.DocumentTransaction" Multiplicity="*" />
@@ -180,19 +193,19 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="DocumentTransaction">
-        <PropertyRef Name="FromUser" />
+        <PropertyRef Name="ToUser" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_DocumentTransaction_Users1">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+  <Association Name="FK_DocumentTransaction_WayHouse">
+    <End Role="CatalogueCriteria" Type="Self.CatalogueCriteria" Multiplicity="0..1" />
     <End Role="DocumentTransaction" Type="Self.DocumentTransaction" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Users">
+      <Principal Role="CatalogueCriteria">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="DocumentTransaction">
-        <PropertyRef Name="ToUser" />
+        <PropertyRef Name="FromWareHouse" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -263,6 +276,10 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="DocumentDetail" EntitySet="DocumentDetail" />
     </AssociationSet>
+    <AssociationSet Name="FK_DocumentTransaction_CatalogueCriteria" Association="Self.FK_DocumentTransaction_CatalogueCriteria">
+      <End Role="CatalogueCriteria" EntitySet="CatalogueCriteria" />
+      <End Role="DocumentTransaction" EntitySet="DocumentTransaction" />
+    </AssociationSet>
     <AssociationSet Name="FK_DocumentTransaction_DocumentDetail" Association="Self.FK_DocumentTransaction_DocumentDetail">
       <End Role="DocumentDetail" EntitySet="DocumentDetail" />
       <End Role="DocumentTransaction" EntitySet="DocumentTransaction" />
@@ -271,8 +288,8 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="DocumentTransaction" EntitySet="DocumentTransaction" />
     </AssociationSet>
-    <AssociationSet Name="FK_DocumentTransaction_Users1" Association="Self.FK_DocumentTransaction_Users1">
-      <End Role="Users" EntitySet="Users" />
+    <AssociationSet Name="FK_DocumentTransaction_WayHouse" Association="Self.FK_DocumentTransaction_WayHouse">
+      <End Role="CatalogueCriteria" EntitySet="CatalogueCriteria" />
       <End Role="DocumentTransaction" EntitySet="DocumentTransaction" />
     </AssociationSet>
     <AssociationSet Name="FK_RoleFunctions_RoleFunctions" Association="Self.FK_RoleFunctions_RoleFunctions">

@@ -49,7 +49,6 @@ function getCriteria() {
             { "data": "CatalogueCriteria" },
             { "data": "PhysicalLocation" },
             { "data": "Uploader" },
-            { "data": "CurrentUser" },
             { "data": "Date" },
             {
                 "className": 'document-control',

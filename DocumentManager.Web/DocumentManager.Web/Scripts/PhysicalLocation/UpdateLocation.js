@@ -41,7 +41,7 @@ function updateLocation() {
             $("#updateBtn").attr("disabled", "disabled");
 
             var locationName = $('#locationName').val().toUpperCase();
-            var physicallocation = $('#location').val();
+            var physicallocation = $('#location').val().toUpperCase();
             var locationDecription = $('#locationDecription').val();
 
             var location = JSON.parse(window.sessionStorage.getItem('location'));

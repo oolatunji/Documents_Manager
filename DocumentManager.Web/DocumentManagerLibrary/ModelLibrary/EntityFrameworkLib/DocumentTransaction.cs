@@ -15,15 +15,17 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
     public partial class DocumentTransaction
     {
         public long ID { get; set; }
-        public Nullable<long> FromUser { get; set; }
+        public Nullable<long> FromWareHouse { get; set; }
         public Nullable<long> ToUser { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<long> DocumentID { get; set; }
         public Nullable<long> DocumentDetailID { get; set; }
         public string Status { get; set; }
+        public Nullable<long> ToWareHouse { get; set; }
     
+        public virtual CatalogueCriteria CatalogueCriteria { get; set; }
+        public virtual CatalogueCriteria CatalogueCriteria1 { get; set; }
         public virtual DocumentDetail DocumentDetail { get; set; }
         public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
     }
 }

@@ -16,7 +16,7 @@
         if (!authorized)
             window.location.href = '../System/UnAuthorized';
         else {
-            $('#catalogue').html('<option>Loading Catalogue Criteria...</option>');
+            $('#catalogue').html('<option>Loading Way Houses...</option>');
             $('#catalogue').prop('disabled', 'disabled');
 
             $('#physicalLocation').html('<option>Loading Physical Location...</option>');
@@ -31,7 +31,7 @@
                 success: function (response) {
                     $('#catalogue').html('');
                     $('#catalogue').prop('disabled', false);
-                    $('#catalogue').append('<option value="">Select Catalogue Criteria</option>');
+                    $('#catalogue').append('<option value="">Select Way House</option>');
                     var catalogue = response.data;
                     var html = '';
                     $.each(catalogue, function (key, value) {
@@ -56,7 +56,7 @@
                     var physicalLocation = response.data;
                     var html = '';
                     $.each(physicalLocation, function (key, value) {
-                        $('#physicalLocation').append('<option value="' + value.ID + '">' + value.Name + '</option>');
+                        $('#physicalLocation').append('<option value="' + value.ID + '">' + value.Name + " [" + value.Location + "]" + '</option>');
                     });
                 },
                 error: function (xhr) {

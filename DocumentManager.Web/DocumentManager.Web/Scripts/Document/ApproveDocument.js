@@ -48,7 +48,7 @@ function getCriteria() {
         "ajax": settingsManager.websiteURL + 'api/DocumentAPI/RetrieveDocumentTransactionsforApproval',
 
         "columnDefs": [{
-            "targets": 5,
+            "targets": 6,
             "createdCell": function (td, cellData, rowData, row, col) {
                 if (rowData.ToUserID === userID) {
                     $(td).attr('class', '');
@@ -58,6 +58,7 @@ function getCriteria() {
 
         "columns": [
             { "data": "Name" },
+            { "data": "FromUser" },
             { "data": "ToUser" },
             { "data": "Date" },
             { "data": "Status" },

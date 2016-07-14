@@ -19,7 +19,6 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
             this.DocumentDetails = new HashSet<DocumentDetail>();
             this.DocumentDetails1 = new HashSet<DocumentDetail>();
             this.DocumentTransactions = new HashSet<DocumentTransaction>();
-            this.DocumentTransactions1 = new HashSet<DocumentTransaction>();
         }
     
         public long ID { get; set; }
@@ -38,6 +37,5 @@ namespace DocumentManagerLibrary.ModelLibrary.EntityFrameworkLib
         public virtual ICollection<DocumentDetail> DocumentDetails { get; set; }
         public virtual ICollection<DocumentDetail> DocumentDetails1 { get; set; }
         public virtual ICollection<DocumentTransaction> DocumentTransactions { get; set; }
-        public virtual ICollection<DocumentTransaction> DocumentTransactions1 { get; set; }
     }
 }
